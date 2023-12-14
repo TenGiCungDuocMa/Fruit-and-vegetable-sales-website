@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,7 +13,7 @@
 	rel="stylesheet">
 <script
 	src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-<link rel='shortcut icon' href='./img/favicon.ico' />
+<link rel='shortcut icon' href='./img/favicon.icon' />
 <style>
 #slidebar .menu a {
 	text-decoration: none;
@@ -105,8 +106,7 @@
 	<jsp:include page="Header.jsp"></jsp:include>
 	
 	<%--tạo mới bean services từ phạm vi session nếu chưa có --%>
-<%-- 	<jsp:useBean id="service" class="model.Services" scope="session"></jsp:useBean> --%>
-	
+	<jsp:useBean id="service" class="model.Services" scope="session" ></jsp:useBean>
 	<form action="" method="get">
 		<div class="container">
 			<div class="row">
@@ -166,15 +166,14 @@
 				<h4>Trái cây sạch</h4>
 			</div>
 			<div class="row">
-			<c:set var="sv" scope="session" value="${Services.instance }"></c:set>
-			<c:forEach var="production" items="${sessionScope.sv.loadData('TRAI CAY SACH')}">
+<%-- 			<c:forEach var="production" items="${service.loadData('TRAI CAY SACH')}"> --%>
 <!-- 				<div class="col"> -->
 <%-- 					<img alt="" src="${production.nameFile }"> --%>
 <%-- 					<h5>${production.nameProduct }</h5> --%>
 <%-- 					<h4 class="price">${production.price } đ / ${production.unit }</h4> --%>
 <!-- 				</div>  -->
-hello
-			</c:forEach>
+<!-- hello -->
+<%-- 			</c:forEach> --%>
 			</div>
 			<div class="row">
 			<a href="#" style="text-align:center;"><button>Xem tất cả<img alt="" src="./img/caret-right-fill.svg"></button></a>

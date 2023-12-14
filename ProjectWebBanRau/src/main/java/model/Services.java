@@ -5,27 +5,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Services {
-	private final Services instance = new Services();
 	private Connection connect;
-	private static final String dbdriver = "net.ucanaccess.jdbc.UcanaccessDriver";
-	private static final String url = "jdbc:ucanaccess://D:\\Java\\LTWeb\\ProjectWebBanRau\\src\\main\\java\\database\\Data_WebRauCu.mdb";
 	private PreparedStatement repa;
 	private ResultSet res;
 
 	public Services() {
 		try {
-			Class.forName(dbdriver);
-			connect = DriverManager.getConnection(url);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			Class.forName("net.ucanaccess.jdbc.UcanaccessDriver");
+			connect = DriverManager.getConnection("jdbc:ucanaccess://D:\\GitHub\\web_project\\ProjectWebBanRau\\src\\main\\java\\database\\Data_WebRauCu.mdb");
 		} catch (SQLException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-
-	public Services getInstance() {
-		return instance;
-	}
+	
 
 	/**
 	 * lấy ra danh sách các loại sản phẩm trong database
@@ -52,7 +47,7 @@ public class Services {
 			repa.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
+		} 
 		return result;
 	}
 
