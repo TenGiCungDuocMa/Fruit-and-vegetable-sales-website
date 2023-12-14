@@ -1,0 +1,121 @@
+package model;
+
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Services {
+	private final Services instance = new Services();
+	private Connection connect;
+	private static final String dbdriver = "net.ucanaccess.jdbc.UcanaccessDriver";
+	private static final String url = "jdbc:ucanaccess://D:\\Java\\LTWeb\\ProjectWebBanRau\\src\\main\\java\\database\\Data_WebRauCu.mdb";
+	private PreparedStatement repa;
+	private ResultSet res;
+
+	public Services() {
+		try {
+			Class.forName(dbdriver);
+			connect = DriverManager.getConnection(url);
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public Services getInstance() {
+		return instance;
+	}
+
+	/**
+	 * lấy ra danh sách các loại sản phẩm trong database
+	 * 
+	 * @param typeProduct là loại sản phẩm cần lấy ra
+	 * @return danh sách sản phẩm có loại là typeProduct
+	 * @throws SQLException
+	 * @throws ClassNotFoundException
+	 */
+	public List<Product> loadData(String typeProduct) {
+//		connection();
+		List<Product> result = new ArrayList<Product>();
+		try {
+			String statementSQL = "select * " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
+					+ " where ct.LoaiSP=?";
+			repa = connect.prepareStatement(statementSQL);
+			repa.setString(1, typeProduct);
+			res = repa.executeQuery();
+			while (res.next()) {
+				result.add(new Product(res.getString("MaSP"), res.getString("TenSP"), res.getString("TenFileSP"),
+						res.getString("LoaiSP"), res.getDouble("Gia"), res.getString("DonViTinh")));
+			}
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * Kiểm tra username có tồn tại trong csdl không
+	 * 
+	 * @param username
+	 * @return true nếu user đã tồn tại / false nếu user chưa tồn tại
+	 */
+	public boolean checkUser(String username) {
+//		connection();
+		boolean result = false;
+		try {
+			String statement = "select USERNAME" + " from KHACHHANG" + " where USERNAME=?";
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, username);
+			res = repa.executeQuery();
+			result = res.next();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	
+	/**
+	 * thêm khách hàng vào csdl
+	 * 
+	 * @param username
+	 * @param password
+	 * @param ten
+	 * @param sdt
+	 * @param email
+	 * @return true nếu thêm thành công / false nếu thêm thất bại
+	 */
+	public boolean addUser(String username, String password, String ten, String sdt, String email) {
+//		connection();
+		int n = -1;
+		if (!this.checkUser(username)) {
+			try {
+				String statement = "insert into KHACHHANG(USERNAME,PASSWORD,TENKH,SDT,EMAIL) " + "values(?,?,?,?,?)";
+				repa = connect.prepareStatement(statement);
+				repa.setString(1, username);
+				repa.setString(2, password);
+				repa.setString(3, ten);
+				repa.setString(4, sdt);
+				repa.setString(5, email);
+				n = repa.executeUpdate(); // n là số dòng bị ảnh hưởng bởi câu lệnh trong SQL
+				repa.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		return (n > 0) ? true : false;
+	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return (this.connect == null) ? "null" : "khong null";
+	}
+
+	public static void main(String[] args) {
+		List<Product> a = new Services().loadData("RAU CU QUA");
+		a.forEach(n -> System.out.println(n.getNameProduct()));
+	}
+}
