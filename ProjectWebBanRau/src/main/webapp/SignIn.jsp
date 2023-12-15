@@ -33,10 +33,10 @@
 </head>
 <body style="text-align: -webkit-center; background-color: aquamarine;">
 	<div class="container">
-		<form action="login" method="post">
+		<form action="j_security_check" method="post">
 			<h2>Đăng nhập</h2>
-			<input type="text" name="nameUser" placeholder="   Tên tài khoản" required="required"> <br>
-			<input type="password" name="password" placeholder="   Mật khẩu" required="required" style="margin-bottom: 10px;"> <br>
+			<input type="text" name="j_username" placeholder="   Tên tài khoản" required="required"> <br>
+			<input type="password" name="j_password" placeholder="   Mật khẩu" required="required" style="margin-bottom: 10px;"> <br>
 			<input class="sub1" type="submit" name="submit" value="Đăng nhập"><br>
 			<div style="margin:5%;">
 				<a href="index.jsp">Về trang chủ |</a>
