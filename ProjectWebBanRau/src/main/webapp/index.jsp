@@ -21,16 +21,16 @@
 }
 
 .container {
-	background-color: #ffffff;
-}
-
-.container .row a button:hover {
-	background-color: green;
+	background-color: white;
 }
 
 .container .row a button {
 	border-radius: 5px;
 	background-color: lightyellow;
+}
+
+.container .row a button:hover {
+	background-color: green;
 }
 
 .container .row .price {
@@ -59,6 +59,7 @@
 	background-position: center;
 	background-size: cover;
 	padding: 50px 80px;
+	margin-top:40px;
 }
 
 .deal .content_deal {
@@ -119,6 +120,7 @@
 	padding-top: 5px;
 	display: block;
 }
+
 #slideshow {
   overflow: hidden;
   height: 510px;
@@ -154,174 +156,181 @@
 
 	<%--tạo mới bean services từ phạm vi session nếu chưa có --%>
 	<jsp:useBean id="service" class="model.Services" scope="session"></jsp:useBean>
+	<div class="container">
+		<div class="row">
+			<div class="col-3"
+				style="display: flex; justify-content: space-evenly;">
+				<img alt="" src="./img/list.svg" width="30px"> <b>Danh mục
+					sản phẩm</b>
+			</div>
+			<div class="col"></div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<div class="col-3" style="height: fit-content;">
+				<div id="slidebar">
+					<ul class="menu">
+						<li><img src="./img/traicay.png"> <a href="#">Trái
+								cây sạch</a></li>
 
-	<form action="" method="get">
-		<div class="container">
-			<div class="row">
-				<div class="col-3"
-					style="display: flex; justify-content: space-evenly;">
-					<img alt="" src="./img/list.svg" width="30px"> <b>Danh
-						mục sản phẩm</b>
+						<li><img src="./img/raucuqua.png"> <a href="#">Rau
+								củ quả</a></li>
+
+						<li><img src="./img/flower1.svg" width="30px"> <a
+							href="#">Các loại hoa</a></li>
+
+						<li><img src="./img/anvat.png"> <a href="#">Ăn vặt</a>
+						</li>
+
+						<li><img src="./img/chebiensan.png"> <a href="#">Chế
+								biến sẵn</a></li>
+
+						<li><img src="./img/dacsanvung.png"> <a href="#">Đặc
+								sản vùng</a></li>
+
+						<li><img src="./img/douong.png"> <a href="#">Đồ
+								uống</a></li>
+
+						<li><img src="./img/giavingucoc.png"> <a href="#">Gia
+								vị ngũ cốc</a></li>
+
+						<li><img src="./img/mypham.png"> <a href="#">Mỹ
+								phẩm</a></li>
+
+						<li><img src="./img/thitca.png"> <a href="#">Thịt
+								cá</a></li>
+					</ul>
 				</div>
-				<div class="col"></div>
+
 			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<div class="col-3" style="height: fit-content;">
-					<div id="slidebar">
-						<ul class="menu">
-							<li><img src="./img/traicay.png"> <a href="#">Trái
-									cây sạch</a></li>
-
-							<li><img src="./img/raucuqua.png"> <a href="#">Rau
-									củ quả</a></li>
-
-							<li><img src="./img/flower1.svg" width="30px"> <a
-								href="#">Các loại hoa</a></li>
-
-							<li><img src="./img/anvat.png"> <a href="#">Ăn vặt</a>
-							</li>
-
-							<li><img src="./img/chebiensan.png"> <a href="#">Chế
-									biến sẵn</a></li>
-
-							<li><img src="./img/dacsanvung.png"> <a href="#">Đặc
-									sản vùng</a></li>
-
-							<li><img src="./img/douong.png"> <a href="#">Đồ
-									uống</a></li>
-
-							<li><img src="./img/giavingucoc.png"> <a href="#">Gia
-									vị ngũ cốc</a></li>
-
-							<li><img src="./img/mypham.png"> <a href="#">Mỹ
-									phẩm</a></li>
-
-							<li><img src="./img/thitca.png"> <a href="#">Thịt
-									cá</a></li>
-						</ul>
-					</div>
-
-				</div>
-				<div class="col-9">
-					<div id="slideshow">
-						<div class="slide-wrapper">
-							<div class="slide">
-								<img src="./img/slide1.jpg" width="100%" height="440px">
-							</div>
-							<div class="slide">
-								<img src="./img/slide2.jpg" width="100%" height="440px">
-							</div>
-							<div class="slide">
-								<img src="./img/slide3.jpg" width="100%" height="440px">
-							</div>
+			<div class="col-9">
+				<div id="slideshow">
+					<div class="slide-wrapper">
+						<div class="slide">
+							<img src="./img/slide1.jpg" width="100%" height="440px">
 						</div>
-					</div>
-
-				</div>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<h4>Trái cây sạch</h4>
-			</div>
-			<div class="row">
-				<c:forEach var="production" varStatus="status"
-					items="${sessionScope.service.loadData('TRAI CAY SACH')}">
-					<c:if test="${status.index < 5 }">
-						<div class="col">
-							<img alt="" src="./img/${production.nameFile }" width="150px">
-							<h5>${production.nameProduct }</h5>
-							<h4 class="price">${production.price }đ/${production.unit }</h4>
+						<div class="slide">
+							<img src="./img/slide2.jpg" width="100%" height="440px">
 						</div>
-					</c:if>
-				</c:forEach>
-			</div>
-			<div class="row">
-				<a href="#" style="text-align: center;"><button>
-						Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
-					</button></a>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<h4>Rau củ quả</h4>
-			</div>
-			<div class="row">
-				<c:forEach var="production" varStatus="status"
-					items="${sessionScope.service.loadData('RAU CU QUA')}">
-					<c:if test="${status.index < 5 }">
-						<div class="col">
-							<img alt="" src="./img/${production.nameFile }" width="150px">
-							<h5>${production.nameProduct }</h5>
-							<h4 class="price">${production.price }đ/${production.unit }</h4>
+						<div class="slide">
+							<img src="./img/slide3.jpg" width="100%" height="440px">
 						</div>
-					</c:if>
-				</c:forEach>
-			</div>
-			<div class="row">
-				<a href="#" style="text-align: center;"><button>
-						Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
-					</button></a>
-			</div>
-		</div>
-		<div class="container">
-			<div class="row">
-				<h4>Các loại hoa</h4>
-			</div>
-			<div class="row">
-				<c:forEach var="production" varStatus="status"
-					items="${sessionScope.service.loadData('CAC LOAI HOA')}">
-					<c:if test="${status.index < 5 }">
-						<div class="col">
-							<img alt="" src="./img/${production.nameFile }" width="150px"
-								height="150px">
-							<h5>${production.nameProduct }</h5>
-							<h4 class="price">${production.price }đ/${production.unit }</h4>
-						</div>
-					</c:if>
-				</c:forEach>
-			</div>
-			<div class="row">
-				<a href="#" style="text-align: center;"><button>
-						Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
-					</button></a>
-			</div>
-		</div>
-
-		<div class="deal">
-			<div class="content_deal">
-				<h3 class="title_deal">MÃ GIẢM GIÁ MỖI NGÀY</h3>
-				<p>Cà chua bi được trồng ở Lâm Đồng là loại thực phẩm dinh
-					dưỡng, tốt cho sức khỏe được nhiều người chọn lựa. Cà chua bi to
-					trái, căng mọng có thể dùng ăn chơi hoặc là nguyên liệu cho những
-					món ăn ngon khác.</p>
-
-				<div class="count_down">
-					<div class="box_deal">
-						<h3 id="day">00</h3>
-						<span>NGÀY</span>
-					</div>
-					<div class="box_deal">
-						<h3 id="hours">00</h3>
-						<span>GIỜ</span>
-					</div>
-					<div class="box_deal">
-						<h3 id="minutes">00</h3>
-						<span>PHÚT</span>
-					</div>
-					<div class="box_deal">
-						<h3 id="second">00</h3>
-						<span>GIÂY</span>
 					</div>
 				</div>
 
-				<a href="#">XEM VOUCHER NGAY</a>
+			</div>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<h4>Trái cây sạch</h4>
+			<hr>
+		</div>
+		<div class="row">
+			<c:forEach var="production" varStatus="status"
+				items="${sessionScope.service.loadData('TRAI CAY SACH')}">
+				<c:if test="${status.index < 5 }">
+					<div class="col">
+						<img alt="" src="./img/${production.nameFile }" width="150px">
+						<h6>${production.nameProduct }</h6>
+						<h5 class="price">${production.price}
+							<u>đ</u> / ${production.unit }
+						</h5>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+		<div class="row">
+			<a href="#" style="text-align: center;"><button>
+					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
+				</button></a>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<h4>Rau củ quả</h4>
+			<hr>
+		</div>
+		<div class="row">
+			<c:forEach var="production" varStatus="status"
+				items="${sessionScope.service.loadData('RAU CU QUA')}">
+				<c:if test="${status.index < 5 }">
+					<div class="col">
+						<img alt="" src="./img/${production.nameFile }" width="150px">
+						<h6>${production.nameProduct }</h6>
+						<h5 class="price">${production.price}
+							<u>đ</u> / ${production.unit }
+						</h5>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+		<div class="row">
+			<a href="#" style="text-align: center;"><button>
+					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
+				</button></a>
+		</div>
+	</div>
+	<div class="container">
+		<div class="row">
+			<h4>Các loại hoa</h4>
+			<hr>
+		</div>
+		<div class="row">
+			<c:forEach var="production" varStatus="status"
+				items="${sessionScope.service.loadData('CAC LOAI HOA')}">
+				<c:if test="${status.index < 5 }">
+					<div class="col">
+						<img alt="" src="./img/${production.nameFile }" width="150px"
+							height="150px">
+						<h6>${production.nameProduct }</h6>
+						<h5 class="price">${production.price}
+							<u>đ</u> / ${production.unit }
+						</h5>
+					</div>
+				</c:if>
+			</c:forEach>
+		</div>
+		<div class="row">
+			<a href="#" style="text-align: center;"><button>
+					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
+				</button></a>
+		</div>
+	</div>
+
+	<div class="deal">
+		<div class="content_deal">
+			<h3 class="title_deal">MÃ GIẢM GIÁ MỖI NGÀY</h3>
+			<p>Cà chua bi được trồng ở Lâm Đồng là loại thực phẩm dinh dưỡng,
+				tốt cho sức khỏe được nhiều người chọn lựa. Cà chua bi to trái, căng
+				mọng có thể dùng ăn chơi hoặc là nguyên liệu cho những món ăn ngon
+				khác.</p>
+
+			<div class="count_down">
+				<div class="box_deal">
+					<h3 id="day">00</h3>
+					<span>NGÀY</span>
+				</div>
+				<div class="box_deal">
+					<h3 id="hours">00</h3>
+					<span>GIỜ</span>
+				</div>
+				<div class="box_deal">
+					<h3 id="minutes">00</h3>
+					<span>PHÚT</span>
+				</div>
+				<div class="box_deal">
+					<h3 id="second">00</h3>
+					<span>GIÂY</span>
+				</div>
 			</div>
 
+			<a href="#">XEM VOUCHER NGAY</a>
 		</div>
-	</form>
+
+	</div>
+	<%-- include code từ trang Footer.jsp  --%>
 	<jsp:include page="Footer.jsp"></jsp:include>
 </body>
 </html>

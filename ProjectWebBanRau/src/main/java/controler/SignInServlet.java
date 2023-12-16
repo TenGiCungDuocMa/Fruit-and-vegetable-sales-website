@@ -35,11 +35,16 @@ public class SignInServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String username = request.getParameter("nameUser");
-		String password = request.getParameter("password");
-		Services sv = (Services) request.getSession().getAttribute("service");
-		boolean checked = sv.checkUser(username);
-		System.out.println(checked);
+//		String username = request.getParameter("nameUser");
+//		String password = request.getParameter("password");
+//		Services sv = (Services) request.getSession().getAttribute("service");
+//		boolean checked = sv.checkUser(username);
+//		System.out.println(checked);
+		for (String i : response.getHeaderNames()) {
+			System.out.println(i);
+		}
 	}
-
+public static void main(String[] args) throws ServletException, IOException {
+	new SignInServlet().doPut(null, null);
+}
 }

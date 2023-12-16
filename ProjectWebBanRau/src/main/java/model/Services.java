@@ -3,7 +3,6 @@ package model;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
-
 public class Services {
 	private Connection connect;
 	private PreparedStatement repa;
@@ -40,8 +39,10 @@ public class Services {
 			repa.setString(1, typeProduct);
 			res = repa.executeQuery();
 			while (res.next()) {
+				String stringPrice = res.getString("Gia");
+				long price = Long.parseLong(stringPrice.substring(0, stringPrice.lastIndexOf(".")));
 				result.add(new Product(res.getString("MaSP"), res.getString("TenSP"), res.getString("TenFileSP"),
-						res.getString("LoaiSP"), res.getDouble("Gia"), res.getString("DonViTinh")));
+						res.getString("LoaiSP"), price , res.getString("DonViTinh")));
 			}
 			res.close();
 			repa.close();
@@ -103,14 +104,8 @@ public class Services {
 		return (n > 0) ? true : false;
 	}
 
-	@Override
-	public String toString() {
-		// TODO Auto-generated method stub
-		return (this.connect == null) ? "null" : "khong null";
-	}
-
 	public static void main(String[] args) {
 		List<Product> a = new Services().loadData("RAU CU QUA");
-		a.forEach(n -> System.out.println(n.getNameProduct()));
+		a.forEach(n -> System.out.println(n.getPrice()));
 	}
 }

@@ -5,10 +5,10 @@ public class Product {
 	private String nameProduct;
 	private String nameFile;
 	private String typeProduct;
-	private double price;
+	private long price;
 	private String unit;
-	public Product(String maSP, String nameProduct, String nameFile, String typeProduct, double price, String unit) {
-		super();
+	public Product(String maSP, String nameProduct, String nameFile, String typeProduct, long price, String unit) {
+	
 		this.maSP = maSP;
 		this.nameProduct = nameProduct;
 		this.nameFile = nameFile;
@@ -40,10 +40,10 @@ public class Product {
 	public void setTypeProduct(String typeProduct) {
 		this.typeProduct = typeProduct;
 	}
-	public double getPrice() {
+	public long getPrice() {
 		return price;
 	}
-	public void setPrice(double price) {
+	public void setPrice(long price) {
 		this.price = price;
 	}
 	public String getUnit() {
