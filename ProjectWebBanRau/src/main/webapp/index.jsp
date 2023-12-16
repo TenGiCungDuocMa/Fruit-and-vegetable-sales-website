@@ -26,11 +26,14 @@
 
 .container .row a button {
 	border-radius: 5px;
-	background-color: lightyellow;
+	background-color: white;
+    border-color: lawngreen;
+    color: forestgreen;
 }
 
 .container .row a button:hover {
 	background-color: green;
+	color: white;
 }
 
 .container .row .price {
@@ -150,7 +153,7 @@
 
 </style>
 </head>
-<body style="background-color: #fffff;">
+<body style="background-color: #f0f0f0;">
 	<%--include code từ trang header.jsp --%>
 	<jsp:include page="Header.jsp"></jsp:include>
 

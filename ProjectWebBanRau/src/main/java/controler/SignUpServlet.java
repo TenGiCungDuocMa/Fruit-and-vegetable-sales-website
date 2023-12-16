@@ -1,19 +1,17 @@
 package controler;
 
+import java.io.IOException;
+
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import model.Services;
 
-import java.io.IOException;
-
 /**
  * Servlet implementation class SignUpServlet
  */
-@WebServlet("/signup")
 public class SignUpServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -57,7 +55,6 @@ public class SignUpServlet extends HttpServlet {
 
 		} else {
 			boolean ok = sv.addUser(username, password, name, sdt, email);
-			
 			getServletContext().getRequestDispatcher("/SignIn.jsp").forward(request, response);
 		}
 	}

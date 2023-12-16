@@ -131,7 +131,7 @@
 		<a href=""><img src="./img/logo1.jpg" class="logo" alt="SITL"></a>
 		<div class="navbar">
 			<ul>
-				<li><a href="">Trang Chủ</a></li>
+				<li><a href="index.jsp">Trang Chủ</a></li>
 				<li><a href="">Sản phẩm</a></li>
 				<li><a href="">Giới Thiệu</a></li>
 				<li><a href="">Về chúng tôi</a></li>

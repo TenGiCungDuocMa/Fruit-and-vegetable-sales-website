@@ -5,21 +5,18 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import model.Services;
-
 import java.io.IOException;
 
 /**
- * Servlet implementation class LoginServlet
+ * Servlet implementation class ClassifyProduct
  */
-public class SignInServlet extends HttpServlet {
+public class ClassifyProduct extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
+
     /**
-     * @see HttpServlet#HttpServlet()
+     * Default constructor. 
      */
-    public SignInServlet() {
-        super();
+    public ClassifyProduct() {
         // TODO Auto-generated constructor stub
     }
 
@@ -27,23 +24,16 @@ public class SignInServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		this.doPost(request, response);
+		// TODO Auto-generated method stub
+		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//		String username = request.getParameter("nameUser");
-//		String password = request.getParameter("password");
-//		Services sv = (Services) request.getSession().getAttribute("service");
-//		boolean checked = sv.checkUser(username);
-//		System.out.println(checked);
-		for (String i : response.getHeaderNames()) {
-			System.out.println(i);
-		}
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
-public static void main(String[] args) throws ServletException, IOException {
-	new SignInServlet().doPost(null, null);
-}
+
 }

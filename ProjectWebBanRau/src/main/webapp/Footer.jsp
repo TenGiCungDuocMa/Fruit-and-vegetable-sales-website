@@ -129,7 +129,7 @@ ul {
 					<div class="footer-col">
 						<h4>DANH MỤC</h4>
 						<ul>
-							<li><a href="#">Trang chủ</a></li>
+							<li><a href="index.jsp">Trang chủ</a></li>
 							<li><a href="#">Sản phẩm</a></li>
 							<li><a href="#">Giới thiệu</a></li>
 							<li><a href="#">Về chúng tôi</a></li>
