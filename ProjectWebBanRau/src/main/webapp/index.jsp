@@ -27,8 +27,8 @@
 .container .row a button {
 	border-radius: 5px;
 	background-color: white;
-    border-color: lawngreen;
-    color: forestgreen;
+	border-color: lawngreen;
+	color: forestgreen;
 }
 
 .container .row a button:hover {
@@ -62,7 +62,7 @@
 	background-position: center;
 	background-size: cover;
 	padding: 50px 80px;
-	margin-top:40px;
+	margin-top: 40px;
 }
 
 .deal .content_deal {
@@ -125,32 +125,30 @@
 }
 
 #slideshow {
-  overflow: hidden;
-  height: 510px;
-  width: 728px;
-  margin: 0 auto;
+	overflow: hidden;
+	height: 510px;
+	width: 728px;
+	margin: 0 auto;
 }
 
 .slide-wrapper {
-  width: 2912px;
-  -webkit-animation: slide 14s ease infinite;
+	width: 2912px;
+	-webkit-animation: slide 14s ease infinite;
 }
 
 .slide {
-  float: left;
-  height: 510px;
-  width: 728px;
+	float: left;
+	height: 510px;
+	width: 728px;
 }
 
-
-@-webkit-keyframes slide {
-  20% {margin-left: 0px;}
-  30% {margin-left: -728px;}
-  50% {margin-left: -728px;}
-  60% {margin-left: -1456px;}
-  80% {margin-left: -1456px;}
+@-webkit-keyframes slide { 
+	20%{margin-left: 0px;}
+	30%{margin-left:-728px;}
+	50%{margin-left:-728px;}
+	60%{margin-left:-1456px;}
+	80%{margin-left:-1456px;}
 }
-
 </style>
 </head>
 <body style="background-color: #f0f0f0;">
@@ -174,34 +172,34 @@
 			<div class="col-3" style="height: fit-content;">
 				<div id="slidebar">
 					<ul class="menu">
-						<li><img src="./img/traicay.png"> <a href="#">Trái
+					
+						<li><a href="classify?typeID=1&typeProduct=TRAI CAY SACH"><img src="./img/traicay.png"> Trái
 								cây sạch</a></li>
-
-						<li><img src="./img/raucuqua.png"> <a href="#">Rau
+						<li><a href="classify?typeID=2&typeProduct=RAU CU QUA"><img src="./img/raucuqua.png"> Rau
 								củ quả</a></li>
 
-						<li><img src="./img/flower1.svg" width="30px"> <a
-							href="#">Các loại hoa</a></li>
+						<li><a href="classify?typeID=3&typeProduct=CAC LOAI HOA"><img src="./img/flower1.svg" width="30px">
+								Các loại hoa</a></li>
 
-						<li><img src="./img/anvat.png"> <a href="#">Ăn vặt</a>
+						<li><a href="classify?typeID=4&typeProduct=snack"><img src="./img/anvat.png"> Ăn vặt</a>
 						</li>
 
-						<li><img src="./img/chebiensan.png"> <a href="#">Chế
-								biến sẵn</a></li>
+						<li><a href="classify?typeID=5&typeProduct=processing"><img src="./img/chebiensan.png">
+								Chế biến sẵn</a></li>
 
-						<li><img src="./img/dacsanvung.png"> <a href="#">Đặc
-								sản vùng</a></li>
+						<li><a href="classify?typeID=6&typeProduct=specialty"><img src="./img/dacsanvung.png">
+								Đặc sản vùng</a></li>
 
-						<li><img src="./img/douong.png"> <a href="#">Đồ
+						<li><a href="classify?typeID=7&typeProduct=drinks"><img src="./img/douong.png"> Đồ
 								uống</a></li>
 
-						<li><img src="./img/giavingucoc.png"> <a href="#">Gia
-								vị ngũ cốc</a></li>
+						<li><a href="classify?typeID=8&typeProduct=cereal"><img src="./img/giavingucoc.png">
+								Gia vị ngũ cốc</a></li>
 
-						<li><img src="./img/mypham.png"> <a href="#">Mỹ
+						<li><a href="classify?typeID=9&typeProduct=cosmetics"><img src="./img/mypham.png"> Mỹ
 								phẩm</a></li>
 
-						<li><img src="./img/thitca.png"> <a href="#">Thịt
+						<li><a href="classify?typeID=10&typeProduct=meatandfish"><img src="./img/thitca.png"> Thịt
 								cá</a></li>
 					</ul>
 				</div>
@@ -235,17 +233,19 @@
 				items="${sessionScope.service.loadData('TRAI CAY SACH')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
+					<a href="#" style="text-decoration: none; color: black;">
 						<img alt="" src="./img/${production.nameFile }" width="150px">
 						<h6>${production.nameProduct }</h6>
 						<h5 class="price">${production.price}
 							<u>đ</u> / ${production.unit }
 						</h5>
+					</a>
 					</div>
 				</c:if>
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="#" style="text-align: center;"><button>
+			<a href="classify?typeID=1&typeProduct=TRAI CAY SACH" style="text-align: center;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>
@@ -260,17 +260,19 @@
 				items="${sessionScope.service.loadData('RAU CU QUA')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
+					<a href="#" style="text-decoration: none; color: black;">
 						<img alt="" src="./img/${production.nameFile }" width="150px">
 						<h6>${production.nameProduct }</h6>
 						<h5 class="price">${production.price}
 							<u>đ</u> / ${production.unit }
 						</h5>
+						</a>
 					</div>
 				</c:if>
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="#" style="text-align: center;"><button>
+			<a href="classify?typeID=2&typeProduct=RAU CU QUA" style="text-align: center;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>
@@ -285,18 +287,20 @@
 				items="${sessionScope.service.loadData('CAC LOAI HOA')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
+					<a href="#" style="text-decoration: none; color: black;">
 						<img alt="" src="./img/${production.nameFile }" width="150px"
 							height="150px">
 						<h6>${production.nameProduct }</h6>
 						<h5 class="price">${production.price}
 							<u>đ</u> / ${production.unit }
 						</h5>
+					</a>
 					</div>
 				</c:if>
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="#" style="text-align: center;"><button>
+			<a href="classify?typeID=3&typeProduct=CAC LOAI HOA" style="text-align: center;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>

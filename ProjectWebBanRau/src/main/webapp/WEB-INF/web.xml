@@ -34,7 +34,7 @@
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>SignUpServlet</servlet-name>
-    <url-pattern>/signup</url-pattern>
+    <url-pattern>/signUp</url-pattern>
   </servlet-mapping>
   <login-config>
 		<auth-method>FORM</auth-method>
