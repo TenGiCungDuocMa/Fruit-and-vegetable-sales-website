@@ -35,6 +35,7 @@ public class ClassifyProduct extends HttpServlet {
 		String typeId = request.getParameter("typeID");
 		Services sv = (Services) request.getSession().getAttribute("service");
 		List<Product> listProduct = sv.loadData(typeProduct);
+		List<String> listBrandName = sv.listBrandName(typeProduct);
 		String typeName = "";
 		switch (typeId) {
 		case "1": {
@@ -80,6 +81,7 @@ public class ClassifyProduct extends HttpServlet {
 		}
 		request.setAttribute("typeName", typeName);
 		request.setAttribute("listPro", listProduct);
+		request.setAttribute("listBrand", listBrandName);
 		getServletContext().getRequestDispatcher("/ShowListProduct.jsp").forward(request, response);
 
 	}

@@ -30,7 +30,6 @@ public class Services {
 	 * @throws ClassNotFoundException
 	 */
 	public List<Product> loadData(String typeProduct) {
-//		connection();
 		List<Product> result = new ArrayList<Product>();
 		try {
 			String statementSQL = "select * " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
@@ -42,7 +41,7 @@ public class Services {
 				String stringPrice = res.getString("Gia");
 				long price = Long.parseLong(stringPrice.substring(0, stringPrice.lastIndexOf(".")));
 				result.add(new Product(res.getString("MaSP"), res.getString("TenSP"), res.getString("TenFileSP"),
-						res.getString("LoaiSP"), price , res.getString("DonViTinh")));
+						res.getString("LoaiSP"), price , res.getString("DonViTinh"),res.getString("Mota"),res.getString("ThuongHieu"),res.getInt("Soluong")));
 			}
 			res.close();
 			repa.close();
@@ -59,7 +58,6 @@ public class Services {
 	 * @return true nếu user đã tồn tại / false nếu user chưa tồn tại
 	 */
 	public boolean checkUser(String username) {
-//		connection();
 		boolean result = false;
 		try {
 			String statement = "select USERNAME" + " from KHACHHANG" + " where USERNAME=?";
@@ -84,7 +82,6 @@ public class Services {
 	 * @return true nếu thêm thành công / false nếu thêm thất bại
 	 */
 	public boolean addUser(String username, String password, String ten, String sdt, String email) {
-//		connection();
 		int n = -1;
 		if (!this.checkUser(username)) {
 			try {
@@ -104,8 +101,45 @@ public class Services {
 		return (n > 0) ? true : false;
 	}
 
+	public Product findProduct(String idProduct) {
+		Product result = null;
+		try {
+			String statement = "select * " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
+					+ " where ct.MaSP=?";
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, idProduct);
+			res = repa.executeQuery();
+			if (res.next()) {
+				String stringPrice = res.getString("Gia");
+				long price = Long.parseLong(stringPrice.substring(0, stringPrice.lastIndexOf(".")));
+				result = new Product(res.getString("MaSP"), res.getString("TenSP"), res.getString("TenFileSP"),
+						res.getString("LoaiSP"), price , res.getString("DonViTinh"),res.getString("Mota"),res.getString("ThuongHieu"),res.getInt("Soluong"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+	public List<String> listBrandName(String typeProduct){
+		List<String> result = new ArrayList<String>();
+		try {
+			String statementSQL = "select distinct sp.ThuongHieu " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
+					+ " where ct.LoaiSP=?";
+			repa = connect.prepareStatement(statementSQL);
+			repa.setString(1, typeProduct);
+			res = repa.executeQuery();
+			while (res.next()) {
+				result.add(res.getString("ThuongHieu"));
+			}
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} 
+		return result;
+	}
 	public static void main(String[] args) {
-		List<Product> a = new Services().loadData("RAU CU QUA");
-		a.forEach(n -> System.out.println(n.getPrice()));
+		
+		System.out.println(new Services().listBrandName("CAC LOAI HOA"));
 	}
 }

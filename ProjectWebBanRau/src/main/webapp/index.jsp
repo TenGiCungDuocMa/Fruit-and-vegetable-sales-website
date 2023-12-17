@@ -190,7 +190,7 @@
 						<li><a href="classify?typeID=6&typeProduct=specialty"><img src="./img/dacsanvung.png">
 								Đặc sản vùng</a></li>
 
-						<li><a href="classify?typeID=7&typeProduct=drinks"><img src="./img/douong.png"> Đồ
+						<li><a href="classify?typeID=7&typeProduct=DO UONG"><img src="./img/douong.png"> Đồ
 								uống</a></li>
 
 						<li><a href="classify?typeID=8&typeProduct=cereal"><img src="./img/giavingucoc.png">
@@ -233,11 +233,11 @@
 				items="${sessionScope.service.loadData('TRAI CAY SACH')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
-					<a href="#" style="text-decoration: none; color: black;">
-						<img alt="" src="./img/${production.nameFile }" width="150px">
+					<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
+						<img alt="${production.nameProduct }" src="./img/${production.nameFile }" width="150px">
 						<h6>${production.nameProduct }</h6>
 						<h5 class="price">${production.price}
-							<u>đ</u> / ${production.unit }
+							<u>đ</u>
 						</h5>
 					</a>
 					</div>
@@ -260,11 +260,11 @@
 				items="${sessionScope.service.loadData('RAU CU QUA')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
-					<a href="#" style="text-decoration: none; color: black;">
-						<img alt="" src="./img/${production.nameFile }" width="150px">
+					<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
+						<img alt="${production.nameProduct }" src="./img/${production.nameFile }" width="150px">
 						<h6>${production.nameProduct }</h6>
 						<h5 class="price">${production.price}
-							<u>đ</u> / ${production.unit }
+							<u>đ</u>
 						</h5>
 						</a>
 					</div>
@@ -287,12 +287,12 @@
 				items="${sessionScope.service.loadData('CAC LOAI HOA')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
-					<a href="#" style="text-decoration: none; color: black;">
-						<img alt="" src="./img/${production.nameFile }" width="150px"
+					<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
+						<img alt="${production.nameProduct }" src="./img/${production.nameFile }" width="150px"
 							height="150px">
 						<h6>${production.nameProduct }</h6>
 						<h5 class="price">${production.price}
-							<u>đ</u> / ${production.unit }
+							<u>đ</u>
 						</h5>
 					</a>
 					</div>

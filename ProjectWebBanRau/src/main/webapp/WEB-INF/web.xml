@@ -37,10 +37,21 @@
     <url-pattern>/signUp</url-pattern>
   </servlet-mapping>
   <login-config>
-		<auth-method>FORM</auth-method>
-		<form-login-config>
-			<form-login-page>/SignIn.jsp</form-login-page>
-			<form-error-page>/SignInError.jsp</form-error-page>
-		</form-login-config>
-	</login-config>
+    <auth-method>FORM</auth-method>
+    <form-login-config>
+      <form-login-page>/SignIn.jsp</form-login-page>
+      <form-error-page>/SignInError.jsp</form-error-page>
+    </form-login-config>
+  </login-config>
+  <servlet>
+    <description></description>
+    <display-name>DescribeProduct</display-name>
+    <servlet-name>DescribeProduct</servlet-name>
+    <servlet-class>controler.DescribeProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DescribeProduct</servlet-name>
+    <url-pattern>/DescribeProduct</url-pattern>
+    <url-pattern>/describe</url-pattern>
+  </servlet-mapping>
 </web-app>

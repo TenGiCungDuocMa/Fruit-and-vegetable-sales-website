@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Trái cây sạch</title>
+<title>${requestScope.typeName }</title>
 <link
 	href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
 	rel="stylesheet">
@@ -15,6 +15,7 @@
 <style type="text/css">
 .navi {
 	color: black;
+	padding-top: 20px;
 }
 
 .navi a {
@@ -25,16 +26,8 @@
 	background-color: white;
 }
 
-.container .row a button {
-	border-radius: 5px;
-	background-color: white;
-	border-color: lawngreen;
-	color: forestgreen;
-}
-
-.container .row a button:hover {
-	background-color: green;
-	color: white;
+.container .row .col {
+	margin-bottom: 70px;
 }
 
 .container .row .price {
@@ -55,19 +48,55 @@
 </head>
 <body style="background-color: #f0f0f0;">
 	<jsp:include page="Header.jsp"></jsp:include>
-	<div class="container">
+	<div class="container" style="margin-bottom: 30px; border-radius: 1%;">
 		<div class="row">
 			<p class="navi">
 				<a href="index.jsp">Trang chủ</a>/Danh mục/${requestScope.typeName }
 			</p>
 		</div>
-		<div class="row">
+	</div>
+	<div class="container" style="margin-bottom: 50px; padding-top: 30px; border-radius: 1%;">
+		<div class="row"> 
 			<div class="col-3">
-				<div class="brandname">THƯƠNG HIỆU</div>
+				<div class="brandname">
+				<h6 style="font-weight: bold;">THƯƠNG HIỆU</h6>
+				<c:forEach var="brand_name" items="${requestScope.listBrand }">
+					<div class="form-check">
+					  <input class="form-check-input" type="checkbox" value="${brand_name }" id="flexCheckDefault">
+					  <label class="form-check-label" for="flexCheckDefault">
+					   ${brand_name }
+					  </label>
+					</div>
+				</c:forEach>
+				</div>
 				<hr>
-				<div class="prices">MỨC GIÁ</div>
-				<hr>
-				<div class="type">LOẠI</div>
+				<div class="prices">
+				<h6 style="font-weight: bold;">MỨC GIÁ</h6>
+					<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="Under100k" id="flexCheckDefault">
+						  <label class="form-check-label" for="flexCheckDefault">
+						  Giá dưới 100.000đ
+						  </label>
+					</div>	
+					<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="From100kTo200k" id="flexCheckDefault">
+						  <label class="form-check-label" for="flexCheckDefault">
+						  100.000đ - 200.000đ
+						  </label>
+					</div>	
+					<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="From200kTo300k" id="flexCheckDefault">
+						  <label class="form-check-label" for="flexCheckDefault">
+						  200.000đ - 300.000đ
+						  </label>
+					</div>	
+					<div class="form-check">
+						  <input class="form-check-input" type="checkbox" value="From300kTo500k" id="flexCheckDefault">
+						  <label class="form-check-label" for="flexCheckDefault">
+						300.000đ - 500.000đ
+						  </label>
+					</div>	
+				</div>
 			</div>
 			<div class="col">
 				<div class="row" style="text-align: left;">
@@ -84,11 +113,11 @@
 				<div class="row">
 					<c:forEach var="production" items="${requestScope.listPro}">
 						<div class="col">
-						<a href="#" style="text-decoration: none; color: black;">
-							<img alt="" src="./img/${production.nameFile }" width="150px" height="150px">
+						<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
+							<img alt="${production.nameProduct }" src="./img/${production.nameFile }" width="150px" height="150px">
 							<h6>${production.nameProduct }</h6>
 							<h5 class="price">${production.price}
-								<u>đ</u> / ${production.unit }
+								<u>đ</u>
 							</h5>
 						</a>
 						</div>
