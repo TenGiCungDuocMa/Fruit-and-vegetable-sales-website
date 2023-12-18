@@ -11,6 +11,7 @@ import model.Services;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Servlet implementation class ClassifyProduct
@@ -31,22 +32,23 @@ public class ClassifyProduct extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		List<Product> listProduct;
+		List<String> listBrandName;		
 		String typeProduct = request.getParameter("typeProduct");
-		String typeId = request.getParameter("typeID");
 		Services sv = (Services) request.getSession().getAttribute("service");
-		List<Product> listProduct = sv.loadData(typeProduct);
-		List<String> listBrandName = sv.listBrandName(typeProduct);
+		listProduct = sv.loadData(typeProduct,"");
+		listBrandName = sv.listBrandName(typeProduct);
 		String typeName = "";
-		switch (typeId) {
-		case "1": {
+		switch (typeProduct) {
+		case "TRAI CAY SACH": {
 			typeName = "Trái cây sạch";
 			break;
 		}
-		case "2": {
+		case "RAU CU QUA": {
 			typeName = "Rau củ quả";
 			break;
 		}
-		case "3": {
+		case "CAC LOAI HOA": {
 			typeName = "Các loại hoa";
 			break;
 		}
@@ -62,7 +64,7 @@ public class ClassifyProduct extends HttpServlet {
 			typeName = "Đặc sản vùng";
 			break;
 		}
-		case "7": {
+		case "DO UONG": {
 			typeName = "Các loại đồ uống";
 			break;
 		}
@@ -80,6 +82,7 @@ public class ClassifyProduct extends HttpServlet {
 		}
 		}
 		request.setAttribute("typeName", typeName);
+		request.setAttribute("typePro", typeProduct);
 		request.setAttribute("listPro", listProduct);
 		request.setAttribute("listBrand", listBrandName);
 		getServletContext().getRequestDispatcher("/ShowListProduct.jsp").forward(request, response);

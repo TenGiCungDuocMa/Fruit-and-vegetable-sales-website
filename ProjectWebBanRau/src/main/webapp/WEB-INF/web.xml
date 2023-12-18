@@ -54,4 +54,15 @@
     <url-pattern>/DescribeProduct</url-pattern>
     <url-pattern>/describe</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>SortProduct</display-name>
+    <servlet-name>SortProduct</servlet-name>
+    <servlet-class>controler.SortProduct</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>SortProduct</servlet-name>
+    <url-pattern>/SortProduct</url-pattern>
+    <url-pattern>/sort</url-pattern>
+  </servlet-mapping>
 </web-app>

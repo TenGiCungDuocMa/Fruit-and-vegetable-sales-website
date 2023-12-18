@@ -128,7 +128,7 @@
 </head>
 <body>
 	<div class="header">
-		<a href=""><img src="./img/logo1.jpg" class="logo" alt="SITL"></a>
+		<a href="index.jsp"><img src="./img/logo1.jpg" class="logo" alt="SITL"></a>
 		<div class="navbar">
 			<ul>
 				<li><a href="index.jsp">Trang Chủ</a></li>

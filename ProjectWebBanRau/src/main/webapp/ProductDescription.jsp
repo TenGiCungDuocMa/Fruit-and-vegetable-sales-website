@@ -25,7 +25,9 @@
 	border-radius: 4px;
 	font-weight: bold;
 }
-
+.cart input:hover {
+	background-color: #228b22;
+}
 .col li {
 	display: flex;
 	margin-bottom: 20px;
@@ -83,7 +85,7 @@
 								<div style="display: flex;">
 									<h6>Số lượng:</h6>
 									<input style="width: 80px; margin-left: 20px;" type="number"
-										min="1" required="required" name="Quantity">
+										min="1" required="required" name="Quantity" value="1">
 								</div>
 								<div class="cart" style="margin-top: 20px;">
 									<input style="width: 60%;" type="submit" name="addCart"
@@ -155,7 +157,7 @@
 		<hr style="margin-top: 0px;">
 		<div class="row">
 			<c:forEach var="production" varStatus="status"
-				items="${sessionScope.service.loadData(requestScope.product.typeProduct)}">
+				items="${sessionScope.service.loadData(requestScope.product.typeProduct,'')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
 						<a href="describe?productID=${production.maSP }"

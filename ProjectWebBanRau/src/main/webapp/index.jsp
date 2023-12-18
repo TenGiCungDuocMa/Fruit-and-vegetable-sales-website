@@ -173,33 +173,33 @@
 				<div id="slidebar">
 					<ul class="menu">
 					
-						<li><a href="classify?typeID=1&typeProduct=TRAI CAY SACH"><img src="./img/traicay.png"> Trái
+						<li><a href="classify?typeProduct=TRAI CAY SACH"><img src="./img/traicay.png"> Trái
 								cây sạch</a></li>
-						<li><a href="classify?typeID=2&typeProduct=RAU CU QUA"><img src="./img/raucuqua.png"> Rau
+						<li><a href="classify?typeProduct=RAU CU QUA"><img src="./img/raucuqua.png"> Rau
 								củ quả</a></li>
 
-						<li><a href="classify?typeID=3&typeProduct=CAC LOAI HOA"><img src="./img/flower1.svg" width="30px">
+						<li><a href="classify?typeProduct=CAC LOAI HOA"><img src="./img/flower1.svg" width="30px">
 								Các loại hoa</a></li>
 
-						<li><a href="classify?typeID=4&typeProduct=snack"><img src="./img/anvat.png"> Ăn vặt</a>
+						<li><a href="classify?typeProduct=snack"><img src="./img/anvat.png"> Ăn vặt</a>
 						</li>
 
-						<li><a href="classify?typeID=5&typeProduct=processing"><img src="./img/chebiensan.png">
+						<li><a href="classify?typeProduct=processing"><img src="./img/chebiensan.png">
 								Chế biến sẵn</a></li>
 
-						<li><a href="classify?typeID=6&typeProduct=specialty"><img src="./img/dacsanvung.png">
+						<li><a href="classify?typeProduct=specialty"><img src="./img/dacsanvung.png">
 								Đặc sản vùng</a></li>
 
-						<li><a href="classify?typeID=7&typeProduct=DO UONG"><img src="./img/douong.png"> Đồ
+						<li><a href="classify?typeProduct=DO UONG"><img src="./img/douong.png"> Đồ
 								uống</a></li>
 
-						<li><a href="classify?typeID=8&typeProduct=cereal"><img src="./img/giavingucoc.png">
+						<li><a href="classify?typeProduct=cereal"><img src="./img/giavingucoc.png">
 								Gia vị ngũ cốc</a></li>
 
-						<li><a href="classify?typeID=9&typeProduct=cosmetics"><img src="./img/mypham.png"> Mỹ
+						<li><a href="classify?typeProduct=cosmetics"><img src="./img/mypham.png"> Mỹ
 								phẩm</a></li>
 
-						<li><a href="classify?typeID=10&typeProduct=meatandfish"><img src="./img/thitca.png"> Thịt
+						<li><a href="classify?typeProduct=meatandfish"><img src="./img/thitca.png"> Thịt
 								cá</a></li>
 					</ul>
 				</div>
@@ -230,7 +230,7 @@
 		</div>
 		<div class="row">
 			<c:forEach var="production" varStatus="status"
-				items="${sessionScope.service.loadData('TRAI CAY SACH')}">
+				items="${sessionScope.service.loadData('TRAI CAY SACH','')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
 					<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
@@ -245,7 +245,7 @@
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="classify?typeID=1&typeProduct=TRAI CAY SACH" style="text-align: center;"><button>
+			<a href="classify?typeProduct=TRAI CAY SACH" style="text-align: center;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>
@@ -257,7 +257,7 @@
 		</div>
 		<div class="row">
 			<c:forEach var="production" varStatus="status"
-				items="${sessionScope.service.loadData('RAU CU QUA')}">
+				items="${sessionScope.service.loadData('RAU CU QUA','')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
 					<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
@@ -272,7 +272,7 @@
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="classify?typeID=2&typeProduct=RAU CU QUA" style="text-align: center;"><button>
+			<a href="classify?typeProduct=RAU CU QUA" style="text-align: center;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>
@@ -284,7 +284,7 @@
 		</div>
 		<div class="row">
 			<c:forEach var="production" varStatus="status"
-				items="${sessionScope.service.loadData('CAC LOAI HOA')}">
+				items="${sessionScope.service.loadData('CAC LOAI HOA','')}">
 				<c:if test="${status.index < 5 }">
 					<div class="col">
 					<a href="describe?productID=${production.maSP }" style="text-decoration: none; color: black;">
@@ -300,7 +300,7 @@
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="classify?typeID=3&typeProduct=CAC LOAI HOA" style="text-align: center;"><button>
+			<a href="classify?typeProduct=CAC LOAI HOA" style="text-align: center;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>
