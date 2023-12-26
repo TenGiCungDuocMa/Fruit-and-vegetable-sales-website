@@ -27,21 +27,29 @@ public class Services {
 	/**
 	 * lấy ra danh sách các loại sản phẩm trong database
 	 * 
-	 * @param typeProduct là loại sản phẩm cần lấy ra
-	 * @param brandname   là thương hiệu của sản phẩm
+	 * @param typeProduct   là loại sản phẩm cần lấy ra
+	 * @param listBrandname là danh sách thương hiệu của sản phẩm
 	 * @return danh sách sản phẩm có loại là typeProduct
 	 * @throws SQLException
 	 * @throws ClassNotFoundException
 	 */
-	public List<Product> loadData(String typeProduct, String brandname) {
+	public List<Product> loadData(String typeProduct, String[] listBrandname) {
 		List<Product> result = null;
 		try {
-			if (brandname != "") {
+			if (listBrandname != null) {
+				String brandName = "";
+				for (int i = 0; i < listBrandname.length; i++) {
+					brandName += "?,";
+				}
+				brandName = brandName.substring(0, brandName.lastIndexOf(","));
 				String statementSQL = "select * " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
-						+ " where ct.LoaiSP=? and sp.ThuongHieu=?";
+						+ " where ct.LoaiSP=? and sp.ThuongHieu IN( " + brandName + ")";
 				repa = connect.prepareStatement(statementSQL);
 				repa.setString(1, typeProduct);
-				repa.setString(2, brandname);
+				for (int i = 0, j = 2; i < listBrandname.length; i++, j++) {
+					repa.setString(j, listBrandname[i]);
+				}
+
 			} else {
 				String statementSQL = "select * " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
 						+ " where ct.LoaiSP=?";
@@ -78,6 +86,7 @@ public class Services {
 				});
 			} else { // false thì sắp xếp giảm dần
 				Collections.sort(listToSort, new Comparator<Product>() {
+
 					@Override
 					public int compare(Product o1, Product o2) {
 						return o2.getNameProduct().compareTo(o1.getNameProduct());
@@ -94,7 +103,9 @@ public class Services {
 					}
 
 				});
-			} else { // false thì sắp xếp giảm dần
+			} else
+
+			{ // false thì sắp xếp giảm dần
 				Collections.sort(listToSort, new Comparator<Product>() {
 					@Override
 					public int compare(Product o1, Product o2) {
@@ -106,9 +117,10 @@ public class Services {
 		}
 		return listToSort;
 	}
-	
+
 	/**
 	 * thêm sản phẩm từ ResultSet đã query vào 1 list product
+	 * 
 	 * @param resulset
 	 * @return
 	 */
@@ -150,6 +162,32 @@ public class Services {
 	}
 
 	/**
+	 * kiểm tra password của user
+	 * 
+	 * @param username
+	 * @param password
+	 * @return
+	 */
+	public KhachHang checkPassword(String username, String password) {
+		KhachHang result = null;
+		try {
+			String statement = "select *" + " from KHACHHANG where USERNAME=? and PASSWORD=?";
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, username);
+			repa.setString(2, password);
+			res = repa.executeQuery();
+			if (res.next()) {
+				result = new KhachHang(res.getString("USERNAME"), res.getString("PASSWORD"), res.getString("TENKH"),
+						res.getString("SDT"), res.getString("EMAIL"), res.getString("ADDRESS"));
+				result.setRolename(res.getString("ROLE_NAME"));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
 	 * thêm khách hàng vào csdl
 	 * 
 	 * @param username
@@ -157,30 +195,40 @@ public class Services {
 	 * @param ten
 	 * @param sdt
 	 * @param email
+	 * @param address
 	 * @return true nếu thêm thành công / false nếu thêm thất bại
 	 */
-	public boolean addUser(String username, String password, String ten, String sdt, String email) {
-		int n = -1;
+	public boolean addUser(String username, String password, String ten, String sdt, String email, String address) {
+		int n = -1, m = -1;
 		if (!this.checkUser(username)) {
 			try {
-				String statement = "insert into KHACHHANG(USERNAME,PASSWORD,TENKH,SDT,EMAIL) " + "values(?,?,?,?,?)";
-				repa = connect.prepareStatement(statement);
+				String statement1 = "insert into KHACHHANG(USERNAME,PASSWORD,TENKH,SDT,EMAIL,ADDRESS) "
+						+ "values(?,?,?,?,?,?)";
+				String statement2 = "insert into KHACHHANG_ROLES(USERNAME,ROLE_NAME) " + "values(?,?)";
+				repa = connect.prepareStatement(statement1);
 				repa.setString(1, username);
 				repa.setString(2, password);
 				repa.setString(3, ten);
 				repa.setString(4, sdt);
 				repa.setString(5, email);
+				repa.setString(6, address);
 				n = repa.executeUpdate(); // n là số dòng bị ảnh hưởng bởi câu lệnh trong SQL
+				repa.close();
+				repa = connect.prepareStatement(statement2);
+				repa.setString(1, username);
+				repa.setString(2, "client");
+				m = repa.executeUpdate(); // m là số dòng bị ảnh hưởng bởi câu lệnh trong SQL
 				repa.close();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return (n > 0) ? true : false;
+		return (n > 0) && (m > 0);
 	}
-	
+
 	/**
 	 * Tìm kiếm sản phẩm có id là tham số đầu vào
+	 * 
 	 * @param idProduct mã sản phẩm cần tìm
 	 * @return sản phẩm có mã sản phẩm là idProduct
 	 */
@@ -204,8 +252,10 @@ public class Services {
 		}
 		return result;
 	}
+
 	/**
 	 * lấy ra danh sách các thương hiệu của loại sản phẩm
+	 * 
 	 * @param typeProduct loại sản phẩm
 	 * @return danh sách sản phẩm của loại sản phẩm
 	 */
@@ -227,11 +277,13 @@ public class Services {
 		}
 		return result;
 	}
+
 	/**
 	 * Lọc ra danh sách sản phẩm theo loại sản phẩm, giá
+	 * 
 	 * @param typeProduct loại sản phẩm cần lọc
-	 * @param fromPrice giá lọc nhỏ
-	 * @param toPrice giá lọc lớn
+	 * @param fromPrice   giá lọc nhỏ
+	 * @param toPrice     giá lọc lớn
 	 * @return danh sách sản phẩm đã lọc
 	 */
 	public List<Product> filterByPrice(String typeProduct, int fromPrice, int toPrice) {
@@ -252,25 +304,32 @@ public class Services {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Lọc ra danh sách sản phẩm theo loại sản phẩm, thương hiệu, mức giá
-	 * @param typeProduct loại sản phẩm cần lọc
-	 * @param BrandName thương hiệu cần lọc
-	 * @param fromPrice giá lọc nhỏ nhất
-	 * @param toPrice giá lọc lớn nhất
+	 * 
+	 * @param typeProduct   loại sản phẩm cần lọc
+	 * @param listBrandName danh sách các thương hiệu cần lọc
+	 * @param fromPrice     giá lọc nhỏ nhất
+	 * @param toPrice       giá lọc lớn nhất
 	 * @return danh sách sản phẩm đã lọc ra
 	 */
-	public List<Product> filterByPriceAndBrandName(String typeProduct,String BrandName, int fromPrice, int toPrice) {
+	public List<Product> filterByPriceAndBrandName(String typeProduct, String[] listBrandName, int fromPrice,
+			int toPrice) {
 		List<Product> result = null;
 		try {
 			String statementSQL = "select * " + " from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
-					+ " where (ct.Gia between ? and ?) and (ct.LoaiSP=?) and (sp.ThuongHieu=?)";
+					+ " where (ct.Gia between ? and ?) and (ct.LoaiSP=?) and (sp.ThuongHieu IN (?))";
 			repa = connect.prepareStatement(statementSQL);
 			repa.setInt(1, fromPrice);
 			repa.setInt(2, toPrice);
 			repa.setString(3, typeProduct);
-			repa.setString(4, BrandName);
+			String brandName = "";
+			for (String s : listBrandName) {
+				brandName += s + ",";
+			}
+			brandName = brandName.substring(0, brandName.lastIndexOf(","));
+			repa.setString(4, brandName);
 			res = repa.executeQuery();
 			result = addProduct(res);
 			res.close();
@@ -281,4 +340,48 @@ public class Services {
 		return result;
 	}
 
+	/**
+	 * tìm kiếm tất cả sản phẩm theo tên
+	 * 
+	 * @param nameProduct tên sản phẩm cần tìm
+	 * @return danh sách các sản phẩm có tên nameProduct
+	 */
+	public List<Product> searchProduct(String nameProduct) {
+		List<Product> result = null;
+		try {
+			String stament = "select * from CTSANPHAM ct inner join SANPHAM sp on ct.MaSP= sp.MaSP"
+					+ " where sp.TenSP like ?";
+			repa = connect.prepareStatement(stament);
+			repa.setString(1, "%" + nameProduct + "%");
+			res = repa.executeQuery();
+			result = addProduct(res);
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	/**
+	 * lấy ra tên role của user
+	 * 
+	 * @param username
+	 * @return
+	 */
+	public String getRoleUser(String username) {
+		String result = "";
+		try {
+			String comment = "select * from KHACHHANG_ROLES where USERNAME=?";
+			repa = connect.prepareStatement(comment);
+			repa.setString(1, username);
+			res = repa.executeQuery();
+			if (res.next()) {
+				result = res.getString("ROLE_NAME");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

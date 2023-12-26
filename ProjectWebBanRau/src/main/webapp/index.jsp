@@ -157,6 +157,8 @@
 
 	<%--tạo mới bean services từ phạm vi session nếu chưa có --%>
 	<jsp:useBean id="service" class="model.Services" scope="session"></jsp:useBean>
+	<%--tạo mới bean cart từ phạm vi session nếu chưa có --%>
+	<jsp:useBean id="cart" class="model.Cart" scope="session"></jsp:useBean>
 	<div class="container">
 		<div class="row">
 			<div class="col-3"
@@ -181,25 +183,25 @@
 						<li><a href="classify?typeProduct=CAC LOAI HOA"><img src="./img/flower1.svg" width="30px">
 								Các loại hoa</a></li>
 
-						<li><a href="classify?typeProduct=snack"><img src="./img/anvat.png"> Ăn vặt</a>
+						<li><a href="classify?typeProduct=DO AN VAT"><img src="./img/anvat.png"> Ăn vặt</a>
 						</li>
 
-						<li><a href="classify?typeProduct=processing"><img src="./img/chebiensan.png">
+						<li><a href="classify?typeProduct=CHE BIEN SAN"><img src="./img/chebiensan.png">
 								Chế biến sẵn</a></li>
 
-						<li><a href="classify?typeProduct=specialty"><img src="./img/dacsanvung.png">
+						<li><a href="classify?typeProduct=DAC SAN VUNG"><img src="./img/dacsanvung.png">
 								Đặc sản vùng</a></li>
 
 						<li><a href="classify?typeProduct=DO UONG"><img src="./img/douong.png"> Đồ
 								uống</a></li>
 
-						<li><a href="classify?typeProduct=cereal"><img src="./img/giavingucoc.png">
+						<li><a href="classify?typeProduct=GIA VI NGU COC"><img src="./img/giavingucoc.png">
 								Gia vị ngũ cốc</a></li>
 
-						<li><a href="classify?typeProduct=cosmetics"><img src="./img/mypham.png"> Mỹ
+						<li><a href="classify?typeProduct=MY PHAM"><img src="./img/mypham.png"> Mỹ
 								phẩm</a></li>
 
-						<li><a href="classify?typeProduct=meatandfish"><img src="./img/thitca.png"> Thịt
+						<li><a href="classify?typeProduct=THIT CA"><img src="./img/thitca.png"> Thịt
 								cá</a></li>
 					</ul>
 				</div>

@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -16,6 +18,7 @@
 @import
 	url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400&display=swap")
 	;
+
 * {
 	padding: 0;
 	margin: 0;
@@ -59,20 +62,20 @@
 	padding-top: 1.5rem;
 }
 
-.navbar ul {
+.navbar .nav {
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	flex-direction: row;
 }
 
-.navbar ul li {
+.navbar .nav li {
 	list-style: none;
 	padding: 0 20px;
 	position: relative;
 }
 
-.navbar ul li a {
+.navbar .nav li a {
 	text-decoration: none;
 	font-size: 16px;
 	font-weight: 600;
@@ -80,11 +83,11 @@
 	transition: 0.4s ease;
 }
 
-.navbar ul li a:hover, .navbar ul li a.active {
+.navbar .nav li a:hover, .navbar .nav li a.active {
 	color: var(--text_icon_color);
 }
 
-.navbar ul li a.active::after, .navbar ul li a:hover:after {
+.navbar .nav li a.active::after, .navbar .nav li a:hover:after {
 	content: "";
 	width: 30%;
 	height: 2px;
@@ -93,9 +96,17 @@
 	left: 20px;
 	background: #40AD1A;
 }
-.header .icon_header {
-	display:flex;
+
+.btn-secondary:hover {
+	color: black ! important;
+	background-color: #a3ef9b !important;
+	border-color: #6c757d !important;
 }
+
+.header .icon_header {
+	display: flex;
+}
+
 .header .icon_header a {
 	font-size: 20px;
 	margin-left: 20px;
@@ -107,44 +118,91 @@
 	border-radius: 20%;
 }
 
-.header .icon_header img{
-	width:30px;
+.header .icon_header img {
+	width: 30px;
 }
-.search_box{
-    background-color: #ffff;
-    display: flex;
-    align-items: center;
-    border-radius: 10px;
+
+.search_box {
+	background-color: #ffff;
+	display: flex;
+	border-radius: 10px;
 }
-.search_box .search_input{
-    height: 40px;
-    border: none;
-    width: 100%;
-    padding: 0 10px;
-    outline: none;
-    border-radius: 10px;
+
+.search_box .search_input {
+	height: 40px;
+	border: none;
+	width: 100%;
+	padding: 0 10px;
+	outline: none;
+	border-radius: 10px 0px 0px 10px;
+}
+
+.searchbutton {
+	background-color: #a3ef9b;
+	border: none;
+	border-radius: 0px 10px 10px 0px;
+	padding: 0px 10px;
+}
+
+.searchbutton:hover {
+	background-color: #228b22;
 }
 </style>
 </head>
 <body>
 	<div class="header">
-		<a href="index.jsp"><img src="./img/logo1.jpg" class="logo" alt="SITL"></a>
+		<a href="index.jsp"><img src="./img/logo1.jpg" class="logo"
+			alt="SITL"></a>
 		<div class="navbar">
-			<ul>
+			<ul class="nav">
 				<li><a href="index.jsp">Trang Chủ</a></li>
-				<li><a href="">Sản phẩm</a></li>
-				<li><a href="">Giới Thiệu</a></li>
-				<li><a href="">Về chúng tôi</a></li>
-				<li><a href="">Liên Hệ</a></li>
+				<li><div class="dropdown">
+						<button
+							style="font-size: 16px; font-weight: 600; color: inherit; background-color: inherit; border: none;"
+							class="btn btn-secondary dropdown-toggle" type="button"
+							id="dropdownMenuButton1" data-bs-toggle="dropdown"
+							aria-expanded="false">Sản phẩm</button>
+						<ul style="flex-direction: column;" class="dropdown-menu"
+							aria-labelledby="dropdownMenuButton1">
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=TRAI CAY SACH">Trái cây sạch</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=RAU CU QUA">Rau củ quả</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=CAC LOAI HOA">Các loại hoa</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=DO AN VAT">Ăn vặt</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=CHE BIEN SAN">Chế biến sẵn</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=DAC SAN VUNG">Đặc sản vùng</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=DO UONG">Đồ uống</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=GIA VI NGU COC">Gia vị ngũ cốc</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=MY PHAM">Mỹ phẩm</a></li>
+							<li><a class="dropdown-item"
+								href="classify?typeProduct=THIT CA">Thịt cá</a></li>
+						</ul>
+					</div></li>
 			</ul>
 		</div>
 		<div class="icon_header">
-			<form action="" class="search_box">
-                <input type="text" class="search_input" placeholder="Bạn tìm gì...">
-               	<a href="#"><img src="./img/search.svg"></a>
-            </form>
-			<a href="#"><img src="./img/cart4.svg"></a>
-			<a href="SignIn.jsp"><img src="./img/person-fill.svg"></a>
+			<form action="lookup" class="search_box" method="get">
+				<input type="text" name="searchValue" class="search_input"
+					placeholder="Bạn tìm gì..."> <input class="searchbutton"
+					type="submit" name="submit" value="Tìm kiếm">
+			</form>
+			<a href="tocart"><img src="./img/cart4.svg"></a>
+			<c:if test="${sessionScope.user == null }">
+				<a href="SignIn.jsp"><img src="./img/person-fill.svg"></a>
+			</c:if>
+			<c:if test="${sessionScope.user != null }">
+				<p style="color: black; margin: 0px 10px;;">Chào,
+					${sessionScope.user.tenkh }</p>
+				<a href="login?logout=ok" style="font-size: 80%;color:#5f9ea0;">Đăng xuất</a>
+			</c:if>
 		</div>
 	</div>
 </body>

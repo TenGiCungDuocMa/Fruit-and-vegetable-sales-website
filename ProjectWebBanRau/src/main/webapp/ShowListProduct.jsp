@@ -16,6 +16,8 @@
 .navi {
 	color: black;
 	padding-top: 20px;
+	display: flex;
+	
 }
 
 .navi a {
@@ -62,17 +64,17 @@
 <body style="background-color: #f0f0f0;">
 	<jsp:include page="Header.jsp"></jsp:include>
 	<div class="container" style="margin-bottom: 30px; border-radius: 1%;">
-		<div class="row">
-			<p class="navi">
-				<a href="index.jsp">Trang chủ</a>/Danh mục/${requestScope.typeName }
-			</p>
+		<div class="row" style="margin-bottom: 30px;background-color:#b0b0b0;">
+			<div class="navi">
+				<a href="index.jsp">Trang chủ</a>/Danh mục/ <p>${requestScope.typeName }</p>
+			</div>
 		</div>
 	</div>
 	<div class="container"
 		style="margin-bottom: 50px; padding-top: 30px; border-radius: 1%;">
 		<div class="row">
 			<div class="col-3">
-				<form action="sort" method="get">
+				<form action="classify" method="get">
 					<div class="brandname">
 						<h6 style="font-weight: bold;">THƯƠNG HIỆU</h6>
 						<c:forEach var="brand_name" items="${requestScope.listBrand }">
@@ -111,8 +113,14 @@
 								class="form-check-label" for="flexCheckDefault">
 								300.000đ - 500.000đ </label>
 						</div>
+						<div class="form-check">
+							<input name="priceLevel" class="form-check-input" type="checkbox"
+								value="over500k" id="flexCheckDefault"> <label
+								class="form-check-label" for="flexCheckDefault">
+								 Giá trên 500.000đ </label>
+						</div>
 					</div>
-					<input type="hidden" name="typeProduct" value="${requestScope.typeName }">
+					<input type="hidden" name="typeProduct" value="${requestScope.typePro }">
 					<div class="filter"
 						style="margin-top: 20px; justify-content: center; display: flex;">
 						<input style="width: 50%" type="submit" value="Áp dụng" >
@@ -123,15 +131,18 @@
 				<div class="row" style="text-align: left;">
 					<h4 style="margin-bottom: 30px;">${requestScope.typeName }</h4>
 					<h6>
-						Sắp xếp: <a href="sort?byname=AZ&typeProduct=${requestScope.typeName }">Tên A -> Z</a> <a href="sort?byname=ZA&typeProduct=${requestScope.typeName }">Tên Z -> A</a> <a
-							href="sort?byprice=ZA&typeProduct=${requestScope.typeName }">Giá giảm dần</a> <a href="sort?byprice=AZ&typeProduct=${requestScope.typeName }">Giá tăng dần</a> <a
-							href="sort?byname=newPro&typeProduct=${requestScope.typeName }">Hàng mới</a>
+						Sắp xếp: 
+						<a href="classify?sortby=name&sortto=AZ&typeProduct=${requestScope.typePro }">Tên A -> Z</a> 
+						<a href="classify?sortby=name&sortto=ZA&typeProduct=${requestScope.typePro }">Tên Z -> A</a> 
+						<a href="classify?sortby=price&sortto=ZA&typeProduct=${requestScope.typePro }">Giá giảm dần</a> 
+						<a href="classify?sortby=price&sortto=AZ&typeProduct=${requestScope.typePro }">Giá tăng dần</a> 
+						<a href="classify?sortby=newPro&sortto=nosort&typeProduct=${requestScope.typePro }">Hàng mới</a>
 					</h6>
 				</div>
 				<hr>
 				<div class="row">
 					<c:forEach var="production" items="${requestScope.listPro}">
-						<div class="col">
+						<div class="col" style="max-width: 30%;">
 							<a href="describe?productID=${production.maSP }"
 								style="text-decoration: none; color: black;"> <img
 								alt="${production.nameProduct }"

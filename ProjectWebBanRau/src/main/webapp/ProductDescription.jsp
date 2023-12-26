@@ -25,9 +25,11 @@
 	border-radius: 4px;
 	font-weight: bold;
 }
+
 .cart input:hover {
 	background-color: #228b22;
 }
+
 .col li {
 	display: flex;
 	margin-bottom: 20px;
@@ -54,34 +56,34 @@
 				</div>
 				<div class="row">
 					<div class="col-7">
-						<form action="" method="get">
-							<div
-								style="font-size: 15px; display: flex; justify-content: space-evenly;">
-								Thương hiệu:
-								<p style="color: #5bbb46;">${requestScope.product.brandName}</p>
-								| Tình trạng:
-								<c:choose>
-									<c:when test="${requestScope.product.quantity > 0}">
-										<p style="color: #5bbb46; font-size: 15px;">Còn hàng</p>
-									</c:when>
-									<c:when test="${requestScope.product.quantity <= 0}">
-										<p style="color: #5bbb46; font-size: 15px;">Hết hàng</p>
-									</c:when>
-								</c:choose>
-							</div>
-							<div class="price"
-								style="font-size: 40px; color: #2e891a; background-color: #f1f1f1">
-								${requestScope.product.price} <u>đ</u>
-							</div>
-							<div
-								style="display: flex; align-items: center; margin-top: 20px;">
-								<h5 style="margin-right: 30px">Tiêu đề:</h5>
-								<input type="radio" id="unitTitle" checked="checked" name="unit"
-									value="${requestScope.product.unit }"> <label
-									for="unitTitle" style="margin-left: 10px;">${requestScope.product.unit }</label>
-							</div>
-							<hr>
-							<c:if test="${requestScope.product.quantity > 0}">	
+						<div
+							style="font-size: 15px; display: flex; justify-content: space-evenly;">
+							Thương hiệu:
+							<p style="color: #5bbb46;">${requestScope.product.brandName}</p>
+							| Tình trạng:
+							<c:choose>
+								<c:when test="${requestScope.product.quantity > 0}">
+									<p style="color: #5bbb46; font-size: 15px;">Còn hàng</p>
+								</c:when>
+								<c:when test="${requestScope.product.quantity <= 0}">
+									<p style="color: #5bbb46; font-size: 15px;">Hết hàng</p>
+								</c:when>
+							</c:choose>
+						</div>
+						<div class="price"
+							style="font-size: 40px; color: #2e891a; background-color: #f1f1f1">
+							${requestScope.product.price} <u>đ</u>
+						</div>
+						<div style="display: flex; align-items: center; margin-top: 20px;">
+							<h5 style="margin-right: 30px">Tiêu đề:</h5>
+							<input type="radio" id="unitTitle" checked="checked" name="unit"
+								value="${requestScope.product.unit }"> <label
+								for="unitTitle" style="margin-left: 10px;">${requestScope.product.unit }</label>
+						</div>
+						<hr>
+						<c:if test="${requestScope.product.quantity > 0}">
+							<form action="tocart" method="get">
+							<input type="hidden" name="product_id" value="${requestScope.product.maSP}">
 								<div style="display: flex;">
 									<h6>Số lượng:</h6>
 									<input style="width: 80px; margin-left: 20px;" type="number"
@@ -89,11 +91,13 @@
 								</div>
 								<div class="cart" style="margin-top: 20px;">
 									<input style="width: 60%;" type="submit" name="addCart"
-										value="Thêm vào giỏ hàng"> <input style="width: 38%;"
-										type="submit" name="pay" value="Thanh toán">
+										value="Thêm vào giỏ hàng"> 
+									<input style="width: 38%;" type="submit" name="pay" 
+										value="Thanh toán">
 								</div>
-							</c:if>
-						</form>
+							</form>
+						</c:if>
+
 					</div>
 
 					<div class="col">

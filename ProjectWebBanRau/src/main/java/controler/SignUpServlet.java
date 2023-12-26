@@ -44,18 +44,22 @@ public class SignUpServlet extends HttpServlet {
 		String name = request.getParameter("tenkh");
 		String sdt = request.getParameter("sdt");
 		String email = request.getParameter("email");
+		String address = request.getParameter("address");
 		HttpSession session = request.getSession();
 		Services sv = (Services) session.getAttribute("service");
 
 		if (sv.checkUser(username)) {
-			response.getWriter().println("tài khảon đã tồn tại");
-
+			request.setAttribute("ok", 0);
+			getServletContext().getRequestDispatcher("/SignUp.jsp").forward(request, response);
 		} else if (!password.equals(repass)) {
-			response.getWriter().println("mật khẩu không trùng");
-
+			request.setAttribute("ok", 1);
+			getServletContext().getRequestDispatcher("/SignUp.jsp").forward(request, response);
 		} else {
-			boolean ok = sv.addUser(username, password, name, sdt, email);
-			getServletContext().getRequestDispatcher("/SignIn.jsp").forward(request, response);
+			boolean ok = sv.addUser(username, password, name, sdt, email, address);
+			if (ok) {
+				request.setAttribute("ok", 2);
+				getServletContext().getRequestDispatcher("/SignIn.jsp").forward(request, response);
+			}
 		}
 	}
 
