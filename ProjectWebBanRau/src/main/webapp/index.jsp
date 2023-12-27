@@ -302,7 +302,7 @@
 			</c:forEach>
 		</div>
 		<div class="row">
-			<a href="classify?typeProduct=CAC LOAI HOA" style="text-align: center;"><button>
+			<a href="classify?typeProduct=CAC LOAI HOA" style="text-align: center;margin-bottom: 10%;"><button>
 					Xem tất cả<img alt="" src="./img/caret-right-fill.svg">
 				</button></a>
 		</div>
@@ -338,7 +338,7 @@
 			<a href="#">XEM VOUCHER NGAY</a>
 		</div>
 
-	</div>
+	</div> 
 	<%-- include code từ trang Footer.jsp  --%>
 	<jsp:include page="Footer.jsp"></jsp:include>
 </body>

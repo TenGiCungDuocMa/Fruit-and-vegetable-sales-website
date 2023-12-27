@@ -379,9 +379,57 @@ public class Services {
 			if (res.next()) {
 				result = res.getString("ROLE_NAME");
 			}
+			res.close();
+			repa.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	/**
+	 * lấy tất cả user trong database
+	 * 
+	 * @return
+	 */
+	public List<KhachHang> getAllUser() {
+		List<KhachHang> resultList = new ArrayList<KhachHang>();
+		try {
+			String statement = "select * from KHACHHANG kh inner join KHACHHANG_ROLES khr on kh.USERNAME=khr.USERNAME";
+			repa = connect.prepareStatement(statement);
+			res = repa.executeQuery();
+			while (res.next()) {
+				KhachHang kh = new KhachHang(res.getString("USERNAME"), res.getString("PASSWORD"),
+						res.getString("TENKH"), res.getString("SDT"), res.getString("EMAIL"), res.getString("ADDRESS"));
+				kh.setRolename(res.getString("ROLE_NAME"));
+				resultList.add(kh);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+		return resultList;
+	}
+	/**
+	 * xóa người dùng có username là giá trị param
+	 * @param username
+	 * @return
+	 */
+	public boolean removeUser(String username) {
+		int n = -1, m = -1;
+		try {
+			String statement1 = "DELETE FROM KHACHHANG WHERE USERNAME=?";
+			repa = connect.prepareStatement(statement1);
+			repa.setString(1, username);
+			n = repa.executeUpdate();
+			repa.close();
+			String statement2 = "DELETE FROM KHACHHANG_ROLES WHERE USERNAME=?";
+			repa = connect.prepareStatement(statement2);
+			repa.setString(1, username);
+			m = repa.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return n > 0 && m > 0;
 	}
 }

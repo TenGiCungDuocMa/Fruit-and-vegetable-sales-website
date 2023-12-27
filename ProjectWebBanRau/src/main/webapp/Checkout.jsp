@@ -110,7 +110,7 @@
 							hàng</a>
 					</div>
 					<div class="col">
-						<a href="#"><button class="submit" style="margin: 10% 0%;">Đặt
+						<a href="ThankyoubyProduct.jsp"><button class="submit" style="margin: 10% 0%;">Đặt
 								hàng</button></a>
 					</div>
 				</div>
