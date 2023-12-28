@@ -30,6 +30,10 @@ public class DescribeProduct extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String idProduct = request.getParameter("productID");
 		Services sv = (Services) request.getSession().getAttribute("service");
+		if(sv == null) {
+			sv = new Services();
+			request.getSession().setAttribute("service", sv);
+		}
 		Product pd = sv.findProduct(idProduct);
 		request.setAttribute("product", pd);
 		getServletContext().getRequestDispatcher("/ProductDescription.jsp").forward(request, response);

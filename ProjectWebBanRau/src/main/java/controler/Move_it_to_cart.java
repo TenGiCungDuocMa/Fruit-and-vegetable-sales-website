@@ -35,8 +35,12 @@ public class Move_it_to_cart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Services sv = (Services) request.getSession().getAttribute("service");
+		if(sv == null) {
+			sv = new Services();
+			request.getSession().setAttribute("service", sv);
+		}
 		Cart cart = (Cart) request.getSession().getAttribute("cart");
-
+		
 		Map<String, String[]> listPara = request.getParameterMap();
 
 		if (listPara.containsKey("Quantity") && listPara.containsKey("product_id")) {
@@ -49,16 +53,24 @@ public class Move_it_to_cart extends HttpServlet {
 			String rp = request.getParameter("removeProduct");
 			cart.removeProduct(rp);
 		}
-
 		Iterator<Entry<String, Integer>> iter1 = cart.getProductInCart();
-		request.setAttribute("listPro", iter1);
-		
+
+		// iter2 để tính tổng tiền
 		Iterator<Entry<String, Integer>> iter2 = cart.getProductInCart();
 		long totalMoney = 0;
 		while (iter2.hasNext()) {
 			Entry<String, Integer> i = iter2.next();
 			totalMoney += sv.findProduct(i.getKey()).getPrice() * i.getValue();
 		}
+		if (listPara.containsKey("addCart")) {
+			String pay = request.getParameter("addCart");
+			if (pay.equals("Thanh toán")) {
+				request.setAttribute("totalMoney", totalMoney);
+				getServletContext().getRequestDispatcher("/Checkout.jsp").forward(request, response);
+
+			}
+		}
+		request.setAttribute("listPro", iter1);
 		request.setAttribute("totalMoney", totalMoney);
 
 		getServletContext().getRequestDispatcher("/ShopingCart.jsp").forward(request, response);

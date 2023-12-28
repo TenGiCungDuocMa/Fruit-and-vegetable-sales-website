@@ -47,7 +47,10 @@ public class SignUpServlet extends HttpServlet {
 		String address = request.getParameter("address");
 		HttpSession session = request.getSession();
 		Services sv = (Services) session.getAttribute("service");
-
+		if(sv == null) {
+			sv = new Services();
+			request.getSession().setAttribute("service", sv);
+		}
 		if (sv.checkUser(username)) {
 			request.setAttribute("ok", 0);
 			getServletContext().getRequestDispatcher("/SignUp.jsp").forward(request, response);

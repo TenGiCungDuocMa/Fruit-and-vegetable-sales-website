@@ -92,7 +92,7 @@
 								<div class="cart" style="margin-top: 20px;">
 									<input style="width: 60%;" type="submit" name="addCart"
 										value="Thêm vào giỏ hàng"> 
-									<input style="width: 38%;" type="submit" name="pay" 
+									<input style="width: 38%;" type="submit" name="addCart" 
 										value="Thanh toán">
 								</div>
 							</form>

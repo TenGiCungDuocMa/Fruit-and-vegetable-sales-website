@@ -159,6 +159,7 @@
 	<jsp:useBean id="service" class="model.Services" scope="session"></jsp:useBean>
 	<%--tạo mới bean cart từ phạm vi session nếu chưa có --%>
 	<jsp:useBean id="cart" class="model.Cart" scope="session"></jsp:useBean>
+	
 	<div class="container">
 		<div class="row">
 			<div class="col-3"

@@ -50,6 +50,10 @@ public class SignInServlet extends HttpServlet {
 			String username = request.getParameter("nameUser");
 			String password = request.getParameter("password");
 			Services sv = (Services) request.getSession().getAttribute("service");
+			if(sv == null) {
+				sv = new Services();
+				request.getSession().setAttribute("service", sv);
+			}
 			boolean checked = sv.checkUser(username);
 			if (checked) {
 				KhachHang kh = sv.checkPassword(username, password);

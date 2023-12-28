@@ -37,6 +37,10 @@ public class ClassifyProduct extends HttpServlet {
 		Map<String, String[]> listPara = request.getParameterMap();
 
 		Services sv = (Services) request.getSession().getAttribute("service");
+		if(sv == null) {
+			sv = new Services();
+			request.getSession().setAttribute("service", sv);
+		}
 		String typeProduct = request.getParameter("typeProduct");
 
 		List<String> listBrandName = sv.listBrandName(typeProduct);

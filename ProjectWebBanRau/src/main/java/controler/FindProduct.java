@@ -31,6 +31,10 @@ public class FindProduct extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String valueSearch = request.getParameter("searchValue");
 		Services sv = (Services) request.getSession().getAttribute("service");
+		if(sv == null) {
+			sv = new Services();
+			request.getSession().setAttribute("service", sv);
+		}
 		List<Product> listProduct = sv.searchProduct(valueSearch);
 		
 		request.setAttribute("valueSearch", valueSearch);

@@ -29,6 +29,10 @@ public class Manauser extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String username = request.getParameter("username");
 		Services sv = (Services) request.getSession().getAttribute("service");
+		if(sv == null) {
+			sv = new Services();
+			request.getSession().setAttribute("service", sv);
+		}
 		boolean ok_remove = sv.removeUser(username);
 		getServletContext().getRequestDispatcher("/UserManagement.jsp").forward(request, response);
 	}

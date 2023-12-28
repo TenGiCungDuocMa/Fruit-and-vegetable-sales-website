@@ -204,7 +204,6 @@ public class Services {
 			try {
 				String statement1 = "insert into KHACHHANG(USERNAME,PASSWORD,TENKH,SDT,EMAIL,ADDRESS) "
 						+ "values(?,?,?,?,?,?)";
-				String statement2 = "insert into KHACHHANG_ROLES(USERNAME,ROLE_NAME) " + "values(?,?)";
 				repa = connect.prepareStatement(statement1);
 				repa.setString(1, username);
 				repa.setString(2, password);
@@ -214,6 +213,8 @@ public class Services {
 				repa.setString(6, address);
 				n = repa.executeUpdate(); // n là số dòng bị ảnh hưởng bởi câu lệnh trong SQL
 				repa.close();
+				
+				String statement2 = "insert into KHACHHANG_ROLES(USERNAME,ROLE_NAME) " + "values(?,?)";
 				repa = connect.prepareStatement(statement2);
 				repa.setString(1, username);
 				repa.setString(2, "client");
