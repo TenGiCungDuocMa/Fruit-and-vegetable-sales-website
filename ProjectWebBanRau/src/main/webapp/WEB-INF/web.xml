@@ -108,4 +108,37 @@
     <servlet-name>Manauser</servlet-name>
     <url-pattern>/Manauser</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>recoverPassword</display-name>
+    <servlet-name>recoverPassword</servlet-name>
+    <servlet-class>controler.recoverPassword</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>recoverPassword</servlet-name>
+    <url-pattern>/recoverPassword</url-pattern>
+    <url-pattern>/forgetpassword</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>ChangePasswordServlet</display-name>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <servlet-class>controler.ChangePasswordServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>ChangePasswordServlet</servlet-name>
+    <url-pattern>/ChangePasswordServlet</url-pattern>
+    <url-pattern>/changepass</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>OrderProducts</display-name>
+    <servlet-name>OrderProducts</servlet-name>
+    <servlet-class>controler.OrderProducts</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>OrderProducts</servlet-name>
+    <url-pattern>/OrderProducts</url-pattern>
+    <url-pattern>/order</url-pattern>
+  </servlet-mapping>
 </web-app>

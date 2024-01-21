@@ -6,54 +6,46 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 public class Cart {
-	private Map<String, Integer> productInCart; //key là id của sản phẩm, value là số lượng sản phẩm 
-	private String noteToSellers;
+	private Map<Product, Integer> productInCart; // key là sản phẩm, value là số lượng sản phẩm
+	private String username;
 
 	public Cart() {
-		this.productInCart = new LinkedHashMap<String, Integer>();
-		this.noteToSellers = "";
+		this.productInCart = new LinkedHashMap<Product, Integer>();
+		this.username = "";
 	}
 
-	public String getNoteToSellers() {
-		return noteToSellers;
+	public void setProductInCart(Map<Product, Integer> productInCart) {
+		this.productInCart = productInCart;
 	}
 
-	public void setNoteToSellers(String noteToSellers) {
-		this.noteToSellers = noteToSellers;
+	public String getUsername() {
+		return username;
 	}
 
-	public Iterator<Entry<String, Integer>> getProductInCart() {
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void putElementInMap(Product p, int num) {
+		this.productInCart.put(p, num);
+	}
+
+	// them san pham vao map
+	public Iterator<Entry<Product, Integer>> getProductInCart() {
 		return productInCart.entrySet().iterator();
 	}
 
 	/**
-	 * Thêm sản phẩm p vào danh sách sản phẩm với số lượng quantity
+	 * Tinh tong tien trong gio hang
 	 * 
-	 * @param p
-	 * @param quantity
+	 * @return
 	 */
-	public void addProduct(String p, Integer quantity) {
-		if (productInCart.containsKey(p)) {
-			Integer oldValue = this.productInCart.get(p);
-			this.productInCart.replace(p, oldValue + quantity);
-		} else {
-			this.productInCart.put(p, quantity);
+	public long totalMoney() {
+		long res = 0;
+		for (Map.Entry<Product, Integer> entry : this.productInCart.entrySet()) {
+			res += entry.getKey().getPrice() * entry.getValue();
 		}
+		return res;
 	}
 
-	/**
-	 * Xóa sản phẩm p khỏi danh sách
-	 * 
-	 * @param p
-	 * @return 
-	 */
-	public void removeProduct(String p) {
-		this.productInCart.remove(p);
-	}
-
-	public void setProductInCart(Map<String, Integer> productInCart) {
-		this.productInCart = productInCart;
-	}
-
-	
 }

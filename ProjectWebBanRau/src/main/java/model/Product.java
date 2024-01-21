@@ -9,7 +9,7 @@ public class Product {
 	private String unit;
 	private String description;
 	private String brandName;
-	private int quantity;
+	private int quantity; // so luong trong kho
 
 	public Product(String maSP, String nameProduct, String nameFile, String typeProduct, long price, String unit,
 			String description, String brandName, int quantity) {

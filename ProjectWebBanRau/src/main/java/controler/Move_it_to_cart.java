@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import model.Cart;
+import model.KhachHang;
 import model.Product;
 import model.Services;
 
@@ -35,45 +36,46 @@ public class Move_it_to_cart extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		Services sv = (Services) request.getSession().getAttribute("service");
-		if(sv == null) {
+		if (sv == null) {
 			sv = new Services();
 			request.getSession().setAttribute("service", sv);
 		}
-		Cart cart = (Cart) request.getSession().getAttribute("cart");
-		
 		Map<String, String[]> listPara = request.getParameterMap();
-
+		KhachHang user = (KhachHang) request.getSession().getAttribute("user");
+		if (user == null) {
+			request.setAttribute("ok", 3);
+			getServletContext().getRequestDispatcher("/SignIn.jsp").forward(request, response);
+			return;
+		}
+		if (listPara.containsKey("removeProduct")) {
+			String pid = request.getParameter("removeProduct");
+			sv.removeProductInCart(user.getUsername(), pid);
+		}
 		if (listPara.containsKey("Quantity") && listPara.containsKey("product_id")) {
 			String quantity = request.getParameter("Quantity");
 			String product_id = request.getParameter("product_id");
-			cart.addProduct(product_id, Integer.parseInt(quantity));
+			sv.addToCart(user.getUsername(), product_id, Integer.parseInt(quantity));
 		}
 
-		if (listPara.containsKey("removeProduct")) {
-			String rp = request.getParameter("removeProduct");
-			cart.removeProduct(rp);
-		}
-		Iterator<Entry<String, Integer>> iter1 = cart.getProductInCart();
-
-		// iter2 để tính tổng tiền
-		Iterator<Entry<String, Integer>> iter2 = cart.getProductInCart();
-		long totalMoney = 0;
-		while (iter2.hasNext()) {
-			Entry<String, Integer> i = iter2.next();
-			totalMoney += sv.findProduct(i.getKey()).getPrice() * i.getValue();
-		}
+		Cart cart = sv.getProductFromCart(user.getUsername());
+		Iterator<Entry<Product, Integer>> iter = cart.getProductInCart();
+		long totalMoney = cart.totalMoney();
+		
 		if (listPara.containsKey("addCart")) {
 			String pay = request.getParameter("addCart");
 			if (pay.equals("Thanh toán")) {
+				request.setAttribute("listPro", iter);
 				request.setAttribute("totalMoney", totalMoney);
 				getServletContext().getRequestDispatcher("/Checkout.jsp").forward(request, response);
-
+				return;
 			}
 		}
-		request.setAttribute("listPro", iter1);
+		request.setAttribute("listPro", iter);
 		request.setAttribute("totalMoney", totalMoney);
 
 		getServletContext().getRequestDispatcher("/ShopingCart.jsp").forward(request, response);
+
+
 	}
 
 	/**

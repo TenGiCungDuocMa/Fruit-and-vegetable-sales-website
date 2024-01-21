@@ -82,36 +82,40 @@
 		</div>
 		<hr>
 		<div class="row">
-			<div class="col-9" style="border-right-style: groove; border-right-width: thin;">
+			<div class="col-9"
+				style="border-right-style: groove; border-right-width: thin;">
 				<c:choose>
 					<c:when test="${requestScope.listPro.hasNext()}">
 						<!-- lấy bean Services trong session -->
 						<jsp:useBean id="sv" class="model.Services" scope="session"></jsp:useBean>
-						<c:forEach var="productid" items="${requestScope.listPro }">
-							<!-- đặt biến product cho mỗi productid -->
-							<c:set var="product"
-								value="${sv.findProduct(productid.getKey()) }" />
+						<c:forEach var="iter" items="${requestScope.listPro }">
+							<!-- đặt biến product cho mỗi key -->
+							<c:set var="product" value="${iter.getKey() }" />
+							<c:set var="quantity" value="${iter.getValue() }" />
 							<div class="row" style="align-items: center;">
 								<div class="col">
-									<a href="tocart?removeProduct=${productid.getKey() }"
+									<c:url var="link" value="tocart">
+										<c:param name="removeProduct" value="${product.maSP }"></c:param>
+									</c:url>
+									<a href="${link }"
 										class="remove_tagA">Xóa</a> <img alt=""
 										src="./img/${product.nameFile }"
 										style="width: 50%; margin-left: 16px;">
 								</div>
 								<div class="col">
-									<a href="describe?productID=${productid.getKey() }"
+									<a href="describe?productID=${product.maSP }"
 										class="namePro">${product.nameProduct}</a>
 								</div>
 								<div class="col">
 									<c:set var="money"
-										value="${product.price * productid.getValue() }" />
+										value="${product.price * quantity }" />
 									<h4 style="font-weight: bold;">${money }
 										<u>đ</u>
 									</h4>
 								</div>
 								<div class="col">
 									<input name="quantity" type="number" min="1"
-										value="${productid.getValue() }" required="required"
+										value="${quantity }" required="required"
 										style="width: 30%;">
 								</div>
 							</div>
@@ -128,30 +132,31 @@
 			</div>
 			<c:if test="${requestScope.totalMoney > 0}">
 				<div class="col" style="margin-left: 10px;">
-						<div class="row">
-							<div class="col">Tổng tiền:</div>
-							<div class="col">
-								<h6 style="font-weight: bold;">${requestScope.totalMoney}
-									<u>đ</u>
-								</h6>
-							</div>
+					<div class="row">
+						<div class="col">Tổng tiền:</div>
+						<div class="col">
+							<h6 style="font-weight: bold;">${requestScope.totalMoney}
+								<u>đ</u>
+							</h6>
 						</div>
-						<div class="row">
-						<c:url var="url" value="pay">
-							<c:param name="totalMoney" value="${requestScope.totalMoney}"></c:param>
+					</div>
+					<div class="row">
+						<c:url var="url" value="tocart">
+							<c:param name="addCart" value="Thanh toán"></c:param>
 						</c:url>
-							<a href="${url }"><button class="submit" style="margin: 10% 0%;">Tiến hành thanh toán</button></a>
-						</div>
-						<div class="row">
-							<a href="index.jsp"
-								style="color: #9ba2ad; text-decoration: none; text-align: center; margin-bottom: 10%;">Tiếp
-								tục mua hàng</a>
-						</div>
-						<div class="row">
-							<p style="color: black; font-size: 14px;">Nếu bạn có lưu lý
-								gì đặc biệt cho đơn hàng thì điền vào đây nhé!</p>
-							<textarea rows="5" cols="50" name="noteByClient"></textarea>
-						</div>
+						<a href="${url }"><button class="submit"
+								style="margin: 10% 0%;">Tiến hành thanh toán</button></a>
+					</div>
+					<div class="row">
+						<a href="index.jsp"
+							style="color: #9ba2ad; text-decoration: none; text-align: center; margin-bottom: 10%;">Tiếp
+							tục mua hàng</a>
+					</div>
+					<div class="row">
+						<p style="color: black; font-size: 14px;">Nếu bạn có lưu lý gì
+							đặc biệt cho đơn hàng thì điền vào đây nhé!</p>
+						<textarea rows="5" cols="50" name="noteByClient"></textarea>
+					</div>
 				</div>
 			</c:if>
 		</div>

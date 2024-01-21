@@ -5,6 +5,16 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Properties;
+import java.util.Random;
+
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.PasswordAuthentication;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 
 public class Services {
 	private Connection connect;
@@ -171,7 +181,8 @@ public class Services {
 	public KhachHang checkPassword(String username, String password) {
 		KhachHang result = null;
 		try {
-			String statement = "select *" + " from KHACHHANG where USERNAME=? and PASSWORD=?";
+			String statement = "select *"
+					+ " from KHACHHANG INNER JOIN KHACHHANG_ROLES ON KHACHHANG.USERNAME = KHACHHANG_ROLES.USERNAME where KHACHHANG.USERNAME=? and KHACHHANG.PASSWORD=?";
 			repa = connect.prepareStatement(statement);
 			repa.setString(1, username);
 			repa.setString(2, password);
@@ -213,7 +224,7 @@ public class Services {
 				repa.setString(6, address);
 				n = repa.executeUpdate(); // n là số dòng bị ảnh hưởng bởi câu lệnh trong SQL
 				repa.close();
-				
+
 				String statement2 = "insert into KHACHHANG_ROLES(USERNAME,ROLE_NAME) " + "values(?,?)";
 				repa = connect.prepareStatement(statement2);
 				repa.setString(1, username);
@@ -411,8 +422,10 @@ public class Services {
 
 		return resultList;
 	}
+
 	/**
 	 * xóa người dùng có username là giá trị param
+	 * 
 	 * @param username
 	 * @return
 	 */
@@ -432,5 +445,246 @@ public class Services {
 			e.printStackTrace();
 		}
 		return n > 0 && m > 0;
+	}
+
+	/**
+	 * them hoac cap nhat so luong san pham vao bang cart cua khach hang co username
+	 * 
+	 * @param username cua khach hang
+	 * @param proid    ma san pham
+	 * @param quality  so luong them vao
+	 * @return
+	 */
+	public boolean addToCart(String username, String proid, int quality) {
+		String statement = "INSERT INTO Cart(Username,MaSP,SoLuong) VALUES (?,?,?)";
+		String st1 = "SELECT * FROM Cart WHERE Username=? AND MaSP=?";
+		int n = -10;
+		try {
+			// kiem tra san pham da ton tai chua
+			repa = connect.prepareStatement(st1);
+			repa.setString(1, username);
+			repa.setString(2, proid);
+			res = repa.executeQuery();
+			if (res.next()) { // neu ton tai thi cap nhat lai so luong
+				int sl = res.getInt("SoLuong");// lay ra so luong cu
+				PreparedStatement prepar = connect
+						.prepareStatement("UPDATE Cart SET SoLuong=? WHERE Username=? AND MaSP=?");
+				prepar.setString(2, username);
+				prepar.setString(3, proid);
+				prepar.setInt(1, quality + sl); // cong sl cu voi sl moi
+				n = prepar.executeUpdate();
+				prepar.close();
+			} else {
+				// them san pham moi vao gio hang
+				repa = connect.prepareStatement(statement);
+				repa.setString(1, username);
+				repa.setString(2, proid);
+				repa.setInt(3, quality);
+				n = repa.executeUpdate();
+			}
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return n > 0;
+	}
+
+	/**
+	 * Lay ra tat car san pham cua khach hang co username
+	 * 
+	 * @param username cua khach hang
+	 * @return
+	 */
+	public Cart getProductFromCart(String username) {
+		Cart result = new Cart();
+		result.setUsername(username);
+		String statement = "SELECT * FROM Cart INNER JOIN SANPHAM ON Cart.MaSP = SANPHAM.MaSP"
+				+ " INNER JOIN CTSANPHAM ON Cart.MaSP = CTSANPHAM.MaSP" + " WHERE Cart.Username = ?";
+		try {
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, username);
+			res = repa.executeQuery();
+			while (res.next()) {
+				String stringPrice = res.getString("Gia");
+				long price = Long.parseLong(stringPrice.substring(0, stringPrice.lastIndexOf(".")));
+				result.putElementInMap(new Product(res.getString("MaSP"), res.getString("TenSP"),
+						res.getString("TenFileSP"), res.getString("LoaiSP"), price, res.getString("DonViTinh"),
+						res.getString("Mota"), res.getString("ThuongHieu"), res.getInt("Soluong")),
+						res.getInt("SoLuong"));
+			}
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return result;
+	}
+
+	/**
+	 * xoa san pham trong gio hang cua khach hang co username
+	 * 
+	 * @param username
+	 * @param proid
+	 * @return
+	 */
+	public boolean removeProductInCart(String username, String proid) {
+		int ok = -10;
+		String statement = "DELETE FROM Cart WHERE Username=? AND MaSP=?";
+		try {
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, username);
+			repa.setString(2, proid);
+			ok = repa.executeUpdate();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return ok > 0;
+	}
+	/**
+	 * xoa tat ca san pham trong gio hang cua khach hang co username
+	 * 
+	 * @param username
+	 * @param proid
+	 * @return
+	 */
+	public boolean removeAllProductInCart(String username) {
+		int ok = -10;
+		String statement = "DELETE FROM Cart WHERE Username=?";
+		try {
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, username);
+			ok = repa.executeUpdate();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ok > 0;
+	}
+
+	/**
+	 * gửi mã xác nhận cho khach hàng có địa chỉ email là emailrecive
+	 * 
+	 * @param emailrecive
+	 * @param content
+	 * @return
+	 */
+	public boolean sendMail(String emailrecive, String verificationCode) {
+		// Get properties object
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.host", MailConfig.HOST_NAME);
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.port", MailConfig.TSL_PORT);
+
+		// tao mot session de gui mail
+		Session session = Session.getDefaultInstance(props, new javax.mail.Authenticator() {
+			protected PasswordAuthentication getPasswordAuthentication() {
+				return new PasswordAuthentication(MailConfig.APP_EMAIL, MailConfig.APP_PASSWORD);
+			}
+		});
+
+		// compose message
+		try {
+			MimeMessage message = new MimeMessage(session);
+			message.setRecipients(Message.RecipientType.TO, InternetAddress.parse(emailrecive));
+			message.setSubject("MÃ XÁC MINH LẤY LẠI MẬT KHẨU CỦA SITL"); // tieu de mail
+			message.setText("Mã xác nhận của bạn là:" + verificationCode);
+
+			// send message
+			Transport.send(message);
+
+			return true;
+		} catch (MessagingException e) {
+			throw new RuntimeException(e);
+		}
+	}
+
+	/**
+	 * doi pass moi cua khach hang co username la uname
+	 * 
+	 * @param uname
+	 * @param newpass
+	 * @return
+	 */
+	public boolean changepassword(String uname, String newpass) {
+		int n = -10;
+		String statement = "UPDATE KHACHHANG SET PASSWORD=? WHERE USERNAME=?";
+		try {
+			repa = connect.prepareStatement(statement);
+			repa.setString(1, newpass);
+			repa.setString(2, uname);
+			n = repa.executeUpdate();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		return n > 0;
+	}
+
+	/**
+	 * luu ma xac nhan tam thoi vao csdl
+	 * 
+	 * @param uname
+	 * @param numcode
+	 */
+	public void saveVerificationCode(String uname, int numcode) {
+		String statement = "INSERT INTO VerificationCode(Username,Numcode) VALUES(?,?)";
+		try {
+			repa = connect.prepareStatement("SELECT * FROM VerificationCode WHERE Username=?");
+			repa.setString(1, uname);
+			res = repa.executeQuery();
+			if (res.next()) {
+				PreparedStatement pre = connect
+						.prepareStatement("UPDATE VerificationCode SET Numcode=? WHERE Username=?");
+				pre.setInt(1, numcode);
+				pre.setString(2, uname);
+				pre.executeUpdate();
+				pre.close();
+			} else {
+				PreparedStatement ps = connect.prepareStatement(statement);
+				ps.setString(1, uname);
+				ps.setInt(2, numcode);
+				ps.executeUpdate();
+				ps.close();
+			}
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	/**
+	 * lay ra ma xac nhan cua username
+	 * @param username
+	 * @return
+	 */
+	public int getVerificationCode(String username) {
+		try {
+			repa = connect.prepareStatement("SELECT * FROM VerificationCode WHERE Username=?");
+			repa.setString(1, username);
+			res = repa.executeQuery();
+			if(res.next()) {
+				return res.getInt("Numcode");
+			}
+			res.close();
+			repa.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return 0;
 	}
 }

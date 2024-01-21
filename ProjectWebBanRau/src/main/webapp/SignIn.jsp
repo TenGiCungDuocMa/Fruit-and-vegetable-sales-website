@@ -52,7 +52,10 @@
 					<p style="color: green;">Đăng kí thành công! Vui lòng đăng nhập!</p>
 				</c:when>
 				<c:when test="${requestScope.ok == 3 }">
-					<p style="color: green;">Vui lòng đăng nhập tài khoản!</p>
+					<p style="color: red;">Vui lòng đăng nhập tài khoản!</p>
+				</c:when>
+				<c:when test="${requestScope.ok == 4 }">
+					<p style="color: green;">Đổi mật khẩu thành công! Vui lòng đăng nhập!</p>
 				</c:when>
 			</c:choose>
 			<input type="text" name="nameUser" placeholder="   Tên tài khoản"
@@ -61,7 +64,7 @@
 				style="margin-bottom: 10px;"> <br> <input class="sub1"
 				type="submit" name="submit" value="Đăng nhập"><br>
 			<div style="margin: 5%;">
-				<a href="index.jsp">Về trang chủ |</a> <a href="#">Quên mật
+				<a href="index.jsp">Về trang chủ |</a> <a href="ForgetPassword.jsp">Quên mật
 					khẩu?</a><br>
 			</div>
 			Bạn chưa có tài khoản? <a href="SignUp.jsp">Đăng kí</a>

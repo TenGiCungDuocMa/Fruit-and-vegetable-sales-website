@@ -194,20 +194,28 @@
 					placeholder="Bạn tìm gì..."> <input class="searchbutton"
 					type="submit" name="submit" value="Tìm kiếm">
 			</form>
-			<a href="tocart"><img src="./img/cart4.svg"></a>
+			
+			<c:if test="${sessionScope.user != null }">
+				<a href="tocart"><img src="./img/cart4.svg"></a>
+			</c:if>
+			<c:if test="${sessionScope.user == null }">
+				<a href="SignIn.jsp"><img src="./img/cart4.svg"></a>
+			</c:if>
+			
 			<c:if test="${sessionScope.user == null }">
 				<a href="SignIn.jsp"><img src="./img/person-fill.svg"></a>
 			</c:if>
+			
 			<c:if test="${sessionScope.user != null }">
 				<p style="color: black; margin: 0px 10px;">Chào,
 					${sessionScope.user.tenkh }</p>
 				<a href="login?logout=ok" style="font-size: 80%; color: #5f9ea0;">Đăng
 					xuất</a>
 				<c:if test="${sessionScope.user.rolename == 'addmin'}">
-					<a href="UserManagement.jsp" style="font-size: 80%; color: #5f9ea0;">Quản
-					lí người dùng</a>
+					<a href="UserManagement.jsp"
+						style="font-size: 80%; color: #5f9ea0;">Quản lí người dùng</a>
 				</c:if>
-				
+
 			</c:if>
 		</div>
 	</div>

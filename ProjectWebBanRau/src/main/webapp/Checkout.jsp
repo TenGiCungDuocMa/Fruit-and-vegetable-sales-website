@@ -55,10 +55,11 @@
 			<div class="col-7">
 				<!-- lấy bean Services trong session -->
 				<jsp:useBean id="sv" class="model.Services" scope="session"></jsp:useBean>
-				<c:forEach var="productid"
-					items="${sessionScope.cart.productInCart }">
+				<c:forEach var="iter"
+					items="${requestScope.listPro }">
 					<!-- đặt biến product cho mỗi productid -->
-					<c:set var="product" value="${sv.findProduct(productid.getKey()) }" />
+					<c:set var="product" value="${iter.getKey() }" />
+					<c:set var="quantity" value="${iter.getValue() }" />
 					<div class="row" style="align-items: center;">
 						<div class="col">
 							<img alt="" src="./img/${product.nameFile }"
@@ -67,12 +68,12 @@
 						<div class="col" style="font-size: large;">${product.nameProduct}</div>
 						<div class="col">
 							<c:set var="money"
-								value="${product.price * productid.getValue() }" />
+								value="${product.price * quantity }" />
 							<h4 style="font-weight: bold;">${money }
 								<u>đ</u>
 							</h4>
 						</div>
-						<div class="col">${productid.getValue() }</div>
+						<div class="col">${quantity }</div>
 					</div>
 					<hr>
 				</c:forEach>
@@ -110,7 +111,7 @@
 							hàng</a>
 					</div>
 					<div class="col">
-						<a href="ThankyoubyProduct.jsp"><button class="submit" style="margin: 10% 0%;">Đặt
+						<a href="order"><button class="submit" style="margin: 10% 0%;">Đặt
 								hàng</button></a>
 					</div>
 				</div>
